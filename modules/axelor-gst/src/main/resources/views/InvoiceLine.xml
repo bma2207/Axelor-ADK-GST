@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+
+	<grid name="invoiceLine-grid" model="com.axelor.gst.db.InvoiceLine"
+		title="invoiceLine-grid">
+		<field name="product" />
+		<field name="HSBN" />
+		<field name="item" />
+		<field name="qty" />
+		<field name="price" />
+		<field name="netAmount" />
+		<field name="gstRate" />
+		<field name="IGST" />
+		<field name="SGST" />
+		<field name="CGST" />
+		<field name="grossAmount" />
+	</grid>
+
+	<form name="invoiceLine-form" model="com.axelor.gst.db.InvoiceLine"
+		title="invoiceLine-form" width="large" onLoad="gst-product-category-items">
+		<panel title="Invoice Line" colSpan="12">
+			<field name="product" title="Product" onChange="action-gst-invoice-product-select"/>
+			<field name="HSBN" title="HSBN"/>
+			<field name="item" required="true" title="Item" />
+			<field name="qty" title="Quantity" onChange="com.axelor.gst.controller.Invoicelinecontroller:calnetamount"/>
+			<field name="price" title="Price"  onChange="com.axelor.gst.controller.Invoicelinecontroller:calnetamount"/>
+			<field name="netAmount" required="true" title="Net amount" readonly="true"/>
+			<field name="gstRate" required="true" title="GST Rate"/>
+			<field name="IGST" required="true" title="IGST" readonly="true"/>
+			<field name="SGST" required="true" title="SGST" readonly="true"/>
+			<field name="CGST" required="true" title="CGST" readonly="true"/>
+			<field name="grossAmount" required="true" title="Gross Amount" readonly="true"/>
+		</panel>
+	</form>
+	<action-record name="gst-product-category" model="com.axelor.gst.db.InvoiceLine">
+		<field name="gstRate" expr="eval:product.gstRate" />
+	</action-record>
+	<action-attrs name="gst-product-category-item">
+	<attribute name="value" for="item" expr="eval:'['+ product.code +']'+ product.name"/>
+	</action-attrs>
+	
+	<action-group name="action-gst-invoice-product-select">
+	<action name="gst-product-category"/>
+	<action name="gst-product-category-item"/>
+	</action-group>
+
+	
+</object-views>

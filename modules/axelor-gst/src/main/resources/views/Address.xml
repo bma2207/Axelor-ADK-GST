@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+	<selection name="gst-address-type-select">
+		<option value="invoice">Invoice</option>
+		<option value="shipping">Shipping</option>
+	</selection>
+	<grid name="address-grid" model="com.axelor.gst.db.Address"  title="address-grid">
+		<field name="type" title="Address Type" />
+		<field name="line1" title="Area"/>
+		<field name="line2" title="Street"/>
+		<field name="country" title="Country"/>
+		<field name="state" title="State"/>
+		<field name="city" title="City"/>
+		<field name="pinCode" title="Pin Code"/> 
+	</grid>
+
+	<form name="address-form" model="com.axelor.gst.db.Address" title="address-form" css="panel-pink" width="large">
+		<panel  title="Address"  colSpan="12">
+		<field name="type" selection="gst-address-type-select"  required="true" title="Address Type"/>
+		<field name="line1" required="true" title="Area"/>
+		<field name="line2" title="Street"/>
+		<field name="country"  required="true" title="Country"/>
+		<field name="state" domain="self.country = :country" title="State" />
+		<field name="city" domain="self.state = :state" required="true" title="City"/>
+		<field name="pinCode" title="Pin Code"/>
+		</panel>
+		<panel sidebar="true">
+			<field name="createdOn" />
+			<field name="updatedOn" />
+		</panel>
+		
+	</form>
+	
+</object-views>

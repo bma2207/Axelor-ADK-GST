@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+	<selection name="gst-address-type-select">
+		<option value="invoice">Invoice</option>
+		<option value="shipping">Shipping</option>
+	</selection>
+	<grid name="company-grid" model="com.axelor.gst.db.Company" title="company-grid">
+		<field name="name" title="Company Name" />
+		<field name="image" title="Image" />
+		<field name="contactList" title="Contact Details" />
+		<field name="GSTIN" title="GSTIN" />
+		<field name="bankList" title="Bank Details" />
+		<field name="address" title="Address" />
+
+	</grid>
+
+	<form name="company-form" model="com.axelor.gst.db.Company" title="company-form"
+		width="large" css="panel-pink">
+		<panel title="Company Details" colSpan="12">
+			<panel colSpan="4">
+				<field name="image" widget="image" title="Image" />
+			</panel>
+			<panel colSpan="8">
+				<field name="name" title="Company Name" colSpan="8" />
+				<field name="GSTIN" colSpan="8" />
+			</panel>
+		</panel>
+		<panel colSpan="12" title="Company Contact Details">
+			<field name="contactList" colSpan="12" title="Contact Details">
+				<viewer><![CDATA[
+        <address>
+        {{record.name}} {{record.type}}<br>
+        {{record.primaryEmail}}, {{record.secondaryEmail}}<br>
+        {{record.primaryPhone}},{{record.secondaryPhone}}
+        </address>
+        ]]>
+        </viewer>
+				<editor x-show-titles="false">
+
+					<field name="name" required="true" />
+					<field name="type" selection="gst-contact-type-select"
+						required="true" />
+					<field name="primaryEmail" />
+					<field name="secondaryEmail" />
+					<field name="primaryPhone" />
+					<field name="secondaryPhone" />
+
+				</editor>
+			</field>
+		</panel>
+
+		<panel colSpan="12" title="Company Bank Details">
+			<field name="bankList" colSpan="12" title="Bank Details" />
+		</panel>
+		<panel sidebar="true">
+			<field name="createdOn" />
+			<field name="updatedOn" />
+		</panel>
+		<panel sidebar="true">
+			<field name="address" title="Address" />
+		</panel>
+
+
+	</form>
+
+</object-views>

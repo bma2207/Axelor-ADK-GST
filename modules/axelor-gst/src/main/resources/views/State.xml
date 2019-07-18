@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+
+	<grid name="state-grid" model="com.axelor.gst.db.State" title="state-grid">
+		<field name="name" title="State" />
+		<field name="country" title="Country"/>
+	</grid>
+
+	<form name="state-form" model="com.axelor.gst.db.State" title="state-form" width="large" css="panel-pink">
+		<panel title="State" colSpan="12" >
+			<field name="name" required="true" title="State"/>
+			<field name="country" required="true" title="Country"/>
+		</panel>
+		<panel sidebar="true">
+			<field name="createdOn" />
+			<field name="updatedOn" />
+		</panel>
+	</form>
+</object-views>

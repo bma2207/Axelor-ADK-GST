@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+	<selection name="gst-address-type-select">
+		<option value="invoice">Invoice</option>
+		<option value="shipping">Shipping</option>
+	</selection>
+	<grid name="sequence-grid" model="com.axelor.gst.db.Sequence" title="sequence-grid">
+		<field name="prefix" title="Prifix" />
+		<field name="suffix" title="Suffix" />
+		<field name="padding" title="Padding"/>
+		<field name="nextNumber" title="Next Number"/>
+		<field name="model" title="Model"/>
+
+	</grid>
+
+	<form name="sequence-form" model="com.axelor.gst.db.Sequence" title="sequence-form" width="large" css="panel-pink">
+		<panel title="Create Sequence" colSpan="12">
+			<field name="prefix" required="true" title="Prifix"/>
+			<field name="suffix" title="Suffix"/>
+			<field name="padding" title="Padding"/>
+			<field name="nextNumber" title="Next Number" readonly="true"/>
+			<field name="model" required="true" title="Model"/>
+			<button name="test" title="tset" onClick="com.axelor.gst.controller.SequenceCreate:generateSequence"/>
+		</panel>
+		<panel sidebar="true">
+			<field name="createdOn" />
+			<field name="updatedOn" />
+		</panel>
+	</form>
+
+</object-views>
