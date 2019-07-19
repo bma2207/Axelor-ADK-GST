@@ -6,6 +6,9 @@
 
 
 	<grid name="product-grid" model="com.axelor.gst.db.Product" title="product-grid">
+		<toolbar>
+			<button name="invoice" title="Invoice" onClick="" />
+		</toolbar>
 		<field name="name" />
 		<field name="code" />
 		<field name="HSBN" />
@@ -15,8 +18,7 @@
 		<field name="image" widget="image" />
 		<field name="gstRate" />
 	</grid>
-	<cards name="product-card" title="product-card"
-		model="com.axelor.gst.db.Product">
+	<cards name="product-card" title="product-card" model="com.axelor.gst.db.Product">
 		<field name="name" />
 		<field name="product" />
 		<field name="salePrice" />
@@ -44,6 +46,7 @@
 
 	<form name="product-form" model="com.axelor.gst.db.Product" title="product-form"
 		width="large">
+
 		<panel title="Product Details" colSpan="12">
 			<panel colSpan="4">
 				<field name="image" widget="image" />

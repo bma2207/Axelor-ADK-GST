@@ -80,25 +80,70 @@
 		model="com.axelor.gst.db.Product">
 		<view type="grid" name="product-grid" />
 		<view type="form" name="product-form" />
-		<view type="cards" name="product-card"/>
+		<view type="cards" name="product-card" />
 		<context name="json-enhance" expr="true" />
 	</action-view>
 
-	
-	<menuitem name="gst-root-invoices" title="Invoice" />
-	
-	<menuitem name="gst-root-invoice" parent="gst-root-invoices"
-		title="Create Invoice" action="incoice.all" />
-	
-	
 
-	<action-view name="incoice.all" title="Invoice"
+	<menuitem name="gst-root-invoices" title="Invoice" />
+
+	<menuitem name="gst-root-invoice" parent="gst-root-invoices"
+		title="Create Invoice" action="invoice.all" />
+	<menuitem name="gst-root-invoiceDraft" parent="gst-root-invoices"
+		title="Draft Invoice" action="DraftInvoice.all" />
+	<menuitem name="gst-root-invoiceValidate" parent="gst-root-invoices"
+		title="Validated Invoice" action="validateInvoice.all" />
+	<menuitem name="gst-root-invoicePaid" parent="gst-root-invoices"
+		title="Paid Invoice" action="paidInvoice.all" />
+
+	<menuitem name="gst-root-invoiceCanceled" parent="gst-root-invoices"
+		title="Canceled Invoice" action="cancelInvoice.all" />
+	<menuitem name="gst-root-invoicePaid" parent="gst-root-invoices"
+		title="All Invoice" action="allInvoice.all" />
+
+	<action-view name="invoice.all" title="Invoice"
 		model="com.axelor.gst.db.Invoice">
 		<view type="grid" name="invoice-grid" />
 		<view type="form" name="invoice-form" />
+		<view type="kanban" name="incoice-kanban" />
+	</action-view>
+	<action-view name="DraftInvoice.all" title="Invoice"
+		model="com.axelor.gst.db.Invoice">
+		<view type="grid" name="invoice-grid" />
+		<view type="form" name="invoice-form" />
+		<domain>self.status = :name</domain>
+		<context name="name" expr="draft" />
+	</action-view>
+	<action-view name="paidInvoice.all" title="Invoice"
+		model="com.axelor.gst.db.Invoice">
+		<view type="grid" name="invoice-grid" />
+		<view type="form" name="invoice-form" />
+		<domain>self.status = :name</domain>
+		<context name="name" expr="paid" />
+	</action-view>
+	<action-view name="validateInvoice.all" title="Invoice"
+		model="com.axelor.gst.db.Invoice">
+		<view type="grid" name="invoice-grid" />
+		<view type="form" name="invoice-form" />
+		<domain>self.status = :name</domain>
+		<context name="name" expr="validated" />
 	</action-view>
 
-	
+	<action-view name="cancelInvoice.all" title="Invoice"
+		model="com.axelor.gst.db.Invoice">
+		<view type="grid" name="invoice-grid" />
+		<view type="form" name="invoice-form" />
+		<domain>self.status = :name</domain>
+		<context name="name" expr="canceled" />
+	</action-view>
+	<action-view name="allInvoice.all" title="Invoice"
+		model="com.axelor.gst.db.Invoice">
+		<view type="grid" name="invoice-grid" />
+		<view type="form" name="invoice-form" />
+		
+	</action-view>
+
+
 	<menuitem name="gst-root-company" title="Company" />
 	<menuitem name="gst-root-companys" parent="gst-root-company"
 		title="Company" action="company.all" />

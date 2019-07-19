@@ -5,15 +5,17 @@
   http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
 
 	<selection name="invoiceStatus">
-	<option value="draft">DRAFT</option>
-	<option value="validated">VALIDATED</option>
-	<option value="paid">PAID</option>
-	<option value="canceled">CANCELED</option>
+		<option value="draft">DRAFT</option>
+		<option value="validated">VALIDATED</option>
+		<option value="paid">PAID</option>
+		<option value="canceled">CANCELED</option>
 	</selection>
-	
-	
-<grid name="invoice-grid" model="com.axelor.gst.db.Invoice" title="invoice-grid">
-		<field name="status" widget="nav-select" selection="invoiceStatus" readonly="true"  />
+
+
+
+	<grid name="invoice-grid" model="com.axelor.gst.db.Invoice" title="invoice-grid">
+		<field name="status" widget="nav-select" selection="invoiceStatus"
+			readonly="true" />
 		<field name="company" />
 		<field name="reference" />
 		<field name="dateTime" />
@@ -30,43 +32,84 @@
 		<field name="grossAmount" />
 		<field name="invoiceItemsList" />
 	</grid>
+	<kanban name="incoice-kanban" title="invoice" model="com.axelor.gst.db.Invoice"
+		columnBy="status" sequenceBy="priority" limit="10">
+		<field name="party" />
+		<field name="status" widget="nav-select" readonly="true"
+			colSpan="8" />
+		<field name="netAmount" />
+		<field name="netIGST" />
+		<field name="netSGST" />
+		<field name="netCGST" />
+		<field name="grossAmount" />
+
+		<hilite color="danger" if="priority == 0" />
+		<hilite color="success" if="priority == 10" />
+		<hilite color="info" if="priority >= 15" />
+		<hilite color="warning" if="priority > 0" />
+		<template><![CDATA[
+    <h4>{{name}}</h4>
+  
+    <div class="card-body">{{party.name}}<br>
+    {{netAmount}}<br>
+    {{netCGST}}<br>
+    {{netSGST}}<br>
+    {{grossAmount}}<br>
+    </div>
+    <div class="card-footer">
+      <i class='fa fa-clock-o'></i> <span>{{startDate|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+    </div>
+    ]]></template>
+	</kanban>
 
 	<form name="invoice-form" model="com.axelor.gst.db.Invoice" title="invoice-form"
 		width="large" css="panel-pink">
+		<toolbar>
+		  <button name="btnPrint" title="Print" showTitle="false" showIf="id" onClick="action-TakeImagePath-On-click" icon="fa-print"  />
+		</toolbar>
 		<panel title="Create Invoice" colSpan="12">
-			<field name="reference" required="true" title="Reference" colSpan="4"/>
-			  <field name="status" widget="nav-select" readonly="true" colSpan="8"/>
-			
-				
+			<field name="reference" required="true" title="Reference"
+				colSpan="4" />
+			<field name="status" widget="nav-select" readonly="true"
+				colSpan="8" />
+
+
 		</panel>
-			<panel title="Party Details" colSpan="12">
-				<field name="party" title="Party Name" onChange="com.axelor.gst.controller.Invoicelinecontroller:setPartyContact" />
-				<field name="partyContact" title="Party Contact"  />
-			</panel>
+		<panel title="Party Details" colSpan="12">
+			<field name="party" title="Party Name"
+				onChange="com.axelor.gst.controller.Invoicelinecontroller:setPartyContact" />
+			<field name="partyContact" title="Party Contact" />
+		</panel>
 
-			<panel title="Address Details" colSpan="12">
-				<field name="invoiceAddress" title="Invoice Address" />
-				<field name="shippingAddress" title="Shipping Address" />
-				<field name="inUseInvoiceAddressAsShipping" title="Use Invoice Address As Shipping" onChange="com.axelor.gst.controller.Invoicelinecontroller:setShippingAddress" />
-			</panel>
+		<panel title="Address Details" colSpan="12">
+			<field name="invoiceAddress" title="Invoice Address" />
+			<field name="shippingAddress" title="Shipping Address" />
+			<field name="inUseInvoiceAddressAsShipping" title="Use Invoice Address As Shipping"
+				onChange="com.axelor.gst.controller.Invoicelinecontroller:setShippingAddress" />
+		</panel>
 
-			<panel title="Invoice Calculation" colSpan="12">
-				<field name="netAmount" title="Net Amount"  readonly="true"/>
-				<field name="netIGST" title="Net IGST" readonly="true"/>
-				<field name="netSGST" title="Net SGST" readonly="true"/>
-				<field name="netCGST" title="Net CGST" readonly="true" />
-				<field name="grossAmount" title="Gross Amount" readonly="true"/>
-			</panel>
+		<panel title="Invoice Calculation" colSpan="12">
+			<field name="netAmount" title="Net Amount" readonly="true" />
+			<field name="netIGST" title="Net IGST" readonly="true" />
+			<field name="netSGST" title="Net SGST" readonly="true" />
+			<field name="netCGST" title="Net CGST" readonly="true" />
 
-			<panel title="Invoice Items List" colSpan="12">
-				<field name="invoiceItemsList" colSpan="12" />
-			</panel>
-		
-		<panel sidebar="true" >
-			<button name="Validated"  title="Validated" onClick="action-validation" hidden="true" showIf="status == 'draft'"/>
-			<button name="Canceled"   title="Canceled" onClick="action-Canceled" hidden="true" showIf="status ==  'draft' || 'validated' "/>
-			<button name="paid" title="Paid" onClick="action-paid" hidden="true" showIf="status == 'validated' "/>
-			<button name="draft" title="Draft" onClick="action-draft" hidden="true" showIf="status == 'validated' "/>
+			<field name="grossAmount" title="Gross Amount" readonly="true" />
+		</panel>
+
+		<panel title="Invoice Items List" colSpan="12" hideIf="invoiceAddress == null OR company == null">
+			<field name="invoiceItemsList" colSpan="12" onChange="action-calculation" />
+		</panel>
+
+		<panel sidebar="true">
+			<button name="Validated" title="Validated" onClick="action-validation"
+				hidden="true" showIf="status == 'draft'" />
+			<button name="Canceled" title="Canceled" onClick="action-Canceled"
+				hidden="true" showIf="status ==  'draft' || 'validated' " />
+			<button name="paid" title="Paid" onClick="action-paid" hidden="true"
+				showIf="status == 'validated' " />
+			<button name="draft" title="Draft" onClick="action-draft"
+				hidden="true" showIf="status == 'validated' " />
 		</panel>
 		<panel sidebar="true">
 			<field name="createdOn" />
@@ -78,25 +121,45 @@
 			<field name="priority" title="Priority" />
 		</panel>
 	</form>
-	
-	
-<action-attrs name="action-validation">
-<attribute name="value" for="status" expr="validated"/>
-</action-attrs>	
 
-<action-attrs name="action-draft">
-<attribute name="value" for="status" expr="draft"/>
-</action-attrs>	
 
-<action-attrs name="action-Canceled">
-<attribute name="value" for="status" expr="Canceled"/>
-</action-attrs>	
+	<action-attrs name="action-validation">
+		<attribute name="value" for="status" expr="validated" />
+	</action-attrs>
 
-<action-attrs name="action-paid">
-<attribute name="value" for="status" expr="paid"/>
-</action-attrs>	
+	<action-attrs name="action-draft">
+		<attribute name="value" for="status" expr="draft" />
+	</action-attrs>
 
+	<action-attrs name="action-Canceled">
+		<attribute name="value" for="status" expr="canceled" />
+	</action-attrs>
+
+	<action-attrs name="action-paid">
+		<attribute name="value" for="status" expr="paid" />
+	</action-attrs>
+
+	<action-method name="action-calculation">
+		<call class="com.axelor.gst.controller.Invoicelinecontroller"
+			method="onCalculation" />
+	</action-method>
 	
 	
 	
+
+	<action-report name="print.WithImage" design="invoice.rptdesign"
+		output="so-${date}${time}" format="pdf">
+		<param name="param" expr="eval:id" />
+		<param name="AttachmentPath" expr="eval:AttachmentPath" />
+	</action-report>
+
+
+	<action-group name="action-TakeImagePath-On-click">
+		<action name="action-AttechMentPath" />
+		<action name="print.WithImage" />
+	</action-group>
+	 <action-method name="action-AttechMentPath">
+    <call class="com.axelor.gst.controller.ReportImagePath" method="ImagePath"/>
+  </action-method>
+
 </object-views>

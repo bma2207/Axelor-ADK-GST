@@ -43,9 +43,14 @@
 	<attribute name="value" for="item" expr="eval:'['+ product.code +']'+ product.name"/>
 	</action-attrs>
 	
+	<action-attrs name="gst-product-category-itemPrice">
+	<attribute name="value" for="price" expr="eval: product.salePrice"/>
+	</action-attrs>
+	
 	<action-group name="action-gst-invoice-product-select">
 	<action name="gst-product-category"/>
 	<action name="gst-product-category-item"/>
+	<action name="gst-product-category-itemPrice"/>
 	</action-group>
 
 	
