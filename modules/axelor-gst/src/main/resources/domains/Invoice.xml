@@ -19,7 +19,7 @@
 		<many-to-one name="partyContact" ref="Contact" />
 		<many-to-one name="invoiceAddress" ref="Address" />
 		<many-to-one name="shippingAddress" ref="Address" />
-		<boolean name="useInvoiceAddressAsShipping" />
+		<boolean name="inUseInvoiceAddressAsShipping" />
 		<decimal name="netAmount" />
 		<decimal name="netIGST" />
 		<decimal name="netSGST" />

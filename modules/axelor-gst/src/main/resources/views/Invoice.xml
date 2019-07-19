@@ -40,22 +40,22 @@
 				
 		</panel>
 			<panel title="Party Details" colSpan="12">
-				<field name="party" title="Party Name" />
+				<field name="party" title="Party Name" onChange="com.axelor.gst.controller.Invoicelinecontroller:setPartyContact" />
 				<field name="partyContact" title="Party Contact"  />
 			</panel>
 
 			<panel title="Address Details" colSpan="12">
 				<field name="invoiceAddress" title="Invoice Address" />
 				<field name="shippingAddress" title="Shipping Address" />
-				<field name="useInvoiceAddressAsShipping" title="Use Invoice Address As Shipping" />
+				<field name="inUseInvoiceAddressAsShipping" title="Use Invoice Address As Shipping" onChange="com.axelor.gst.controller.Invoicelinecontroller:setShippingAddress" />
 			</panel>
 
 			<panel title="Invoice Calculation" colSpan="12">
-				<field name="netAmount" title="Net Amount" />
-				<field name="netIGST" title="Net IGST" />
-				<field name="netSGST" title="Net SGST" />
-				<field name="netCGST" title="Net CGST" />
-				<field name="grossAmount" title="Gross Amount" />
+				<field name="netAmount" title="Net Amount"  readonly="true"/>
+				<field name="netIGST" title="Net IGST" readonly="true"/>
+				<field name="netSGST" title="Net SGST" readonly="true"/>
+				<field name="netCGST" title="Net CGST" readonly="true" />
+				<field name="grossAmount" title="Gross Amount" readonly="true"/>
 			</panel>
 
 			<panel title="Invoice Items List" colSpan="12">
@@ -63,10 +63,10 @@
 			</panel>
 		
 		<panel sidebar="true" >
-			<button name="Validated"  title="Validated" onClick="action-gst-status-validated" hidden="true" showIf="status == 'draft'"/>
-			<button name="Canceled"   title="Canceled" onClick="action-gst-status-canceled"/>
-			<button name="paid" title="Paid" onClick="action-gst-status-paid"/>
-			<button name="draft" title="Draft" onClick="action-gst-status-draft"/>
+			<button name="Validated"  title="Validated" onClick="action-validation" hidden="true" showIf="status == 'draft'"/>
+			<button name="Canceled"   title="Canceled" onClick="action-Canceled" hidden="true" showIf="status ==  'draft' || 'validated' "/>
+			<button name="paid" title="Paid" onClick="action-paid" hidden="true" showIf="status == 'validated' "/>
+			<button name="draft" title="Draft" onClick="action-draft" hidden="true" showIf="status == 'validated' "/>
 		</panel>
 		<panel sidebar="true">
 			<field name="createdOn" />
@@ -79,41 +79,24 @@
 		</panel>
 	</form>
 	
-	<action-attrs name="action-gst-invoice-status">
+	
+<action-attrs name="action-validation">
+<attribute name="value" for="status" expr="validated"/>
+</action-attrs>	
 
-	<attribute name="hidden" for="paid" expr="eval : status == 'canceled' "/>
-	<attribute name="hidden" for="draft" expr="eval : status == 'canceled' "/>
-	<attribute name="hidden" for="Validated" expr="eval : status == 'canceled' "/>
-	<attribute name="hidden" for="Canceled" expr="eval : status == 'canceled' "/>
+<action-attrs name="action-draft">
+<attribute name="value" for="status" expr="draft"/>
+</action-attrs>	
+
+<action-attrs name="action-Canceled">
+<attribute name="value" for="status" expr="Canceled"/>
+</action-attrs>	
+
+<action-attrs name="action-paid">
+<attribute name="value" for="status" expr="paid"/>
+</action-attrs>	
+
 	
-	</action-attrs>
-	
-	<action-attrs name="action-gst-invoice-status2">
-		<attribute name="hidden" for="Validated" expr="eval : status == 'validated' "/>
-	<attribute name="hidden" for="draft" expr="eval : status == 'draft' "/>
-	<attribute name="hidden" for="paid" expr="eval : status == 'draft' "/>
-	
-	</action-attrs>
-	<action-group name="action-invoice-status-group">
-	<action name="action-gst-invoice-status"/>
-	<action name="action-gst-invoice-status2"/>
-	</action-group>
-	
-	<action-method name="action-gst-status-validated">
-	<call class="com.axelor.gst.controller.InvoiceStatusController" method="onConfirm"/>
-	</action-method>
-	
-	<action-method name="action-gst-status-canceled">
-	<call class="com.axelor.gst.controller.InvoiceStatusController" method="onCanceled"/>
-	</action-method>
-	
-	<action-method name="action-gst-status-draft">
-	<call class="com.axelor.gst.controller.InvoiceStatusController" method="onDraft"/>
-	</action-method>
-	
-	<action-method name="action-gst-status-paid">
-	<call class="com.axelor.gst.controller.InvoiceStatusController" method="onPaid"/>
-	</action-method>
 	
 	
 </object-views>
