@@ -29,7 +29,7 @@
 			<field name="qty" title="Quantity" onChange="com.axelor.gst.controller.Invoicelinecontroller:calnetamount"/>
 			<field name="price" title="Price"  onChange="com.axelor.gst.controller.Invoicelinecontroller:calnetamount"/>
 			<field name="netAmount" required="true" title="Net amount" readonly="true"/>
-			<field name="gstRate" required="true" title="GST Rate"/>
+			<field name="gstRate" required="true" title="GST Rate" readonly="true"/>
 			<field name="IGST" required="true" title="IGST" readonly="true"/>
 			<field name="SGST" required="true" title="SGST" readonly="true"/>
 			<field name="CGST" required="true" title="CGST" readonly="true"/>

@@ -1,6 +1,7 @@
 package com.axelor.gst.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.axelor.db.JpaSupport;
@@ -9,11 +10,20 @@ import com.axelor.gst.db.Contact;
 import com.axelor.gst.db.Invoice;
 import com.axelor.gst.db.InvoiceLine;
 import com.axelor.gst.db.Party;
+import com.axelor.gst.db.Product;
+import com.axelor.gst.db.repo.ProductRepo;
+import com.axelor.gst.services.ProductServiceIMP;
+import com.axelor.i18n.I18n;
+import com.axelor.meta.schema.actions.ActionValidate.Alert;
+import com.axelor.meta.schema.actions.ActionView;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
+import com.google.inject.Inject;
 
 public class Invoicelinecontroller extends JpaSupport {
-
+   
+	@Inject
+	private ProductServiceIMP service;
 	public void calnetamount(ActionRequest request, ActionResponse response) {
 
 		InvoiceLine invoiceline = request.getContext().asType(InvoiceLine.class);
@@ -49,7 +59,12 @@ public class Invoicelinecontroller extends JpaSupport {
 			response.setValue("grossAmount", invoiceline.getGrossAmount());
 			response.setValue("CGST", invoiceline.getCGST());
 			response.setValue("SGST", invoiceline.getSGST());
-		} else {
+		} else if (companyAddress.getState() == null && invoiceAddress.getState() == null) {
+			
+			Alert("Plz selct ");
+			 
+		}
+		else{
 
 			BigDecimal igst = BigDecimal.ZERO;
 			BigDecimal valueigst = invoiceline.getNetAmount();
@@ -61,6 +76,11 @@ public class Invoicelinecontroller extends JpaSupport {
 			response.setValue("IGST", invoiceline.getIGST());
 			response.setValue("grossAmount", invoiceline.getGrossAmount());
 		}
+	}
+
+	private void Alert(String string) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public void onCalculation(ActionRequest request, ActionResponse response) {
@@ -156,8 +176,47 @@ public class Invoicelinecontroller extends JpaSupport {
 				}
 				response.setValue("shippingAddress", address);
 			}
-		} else {
+		} 
+		else {
 			response.setValue("shippingAddress", address);
 		}
 	}
+	
+	public void openPrintWizard(ActionRequest request, ActionResponse response) {
+	    Product  product = request.getContext().asType(Product.class);
+
+	    @SuppressWarnings("unchecked")
+	    List<Integer> lstSelectedLocations = (List<Integer>) request.getContext().get("_ids");
+       
+	    response.setView(
+	        ActionView.define(I18n.get("hello"))
+	            .model("com.axelor.gst.db.Invoice")
+	            .add("form", "invoice-form")
+	            .context("productIds", lstSelectedLocations)
+	            .map());
+	  }
+	public void productIds(ActionRequest request, ActionResponse response)
+	{
+		
+		Invoice invoice=request.getContext().asType(Invoice.class);
+		List<Integer> productids = (List<Integer>) request.getContext().get("productIds");
+	    List<Product>  productList =(List<Product>) service.productList(productids);
+	    List<InvoiceLine> invoiceList=new ArrayList<InvoiceLine>();
+	   
+	    for (Product productObj : productList) {
+	    	InvoiceLine invoiceLine=new InvoiceLine();
+	    	invoiceLine.setProduct(productObj);
+	    	invoiceLine.setGstRate(productObj.getGstRate());
+	    	invoiceLine.setPrice(productObj.getSalePrice());
+	    	invoiceLine.setItem('[' + productObj.getCode() + ']' + productObj.getName());
+	    	invoiceLine.setQty(1);
+	    	
+	    	invoiceList.add(invoiceLine);
+	    	
+		}
+	    response.setValue("invoiceItemsList", invoiceList);
+	    
+	   
+	}
+	
 }

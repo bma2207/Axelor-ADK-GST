@@ -440,29 +440,13 @@
                     <property name="nativeDataType">12</property>
                 </structure>
             </list-property>
-            <xml-property name="queryText"><![CDATA[select invoice.net_amount as TotalAmount,invoice.netcgst as NetCGST,invoice.netigst as NetIGST,invoice.netsgst as NetSGST,invoice.gross_amount as totalGross,invoiceLine.cgst as CGST,invoiceLine.sgst as SGST,invoiceLine.igst as IGST ,invoiceLine.gross_amount as GrossAmount,invoiceLine.qty,company.name as CompanyName ,address.line1,address.line2,address.city,city.name,address.pin_code,state.name,country.name,file.file_name,file.file_path from gst_invoice invoice inner join gst_invoice_invoice_items_list list on list.gst_invoice=invoice.id inner join gst_invoice_line invoiceLine on list.invoice_items_list=invoiceLine.id inner join gst_company company on company.id=invoice.company inner join gst_address address on address.id=company.address inner join gst_city city on city.id=address.city inner join gst_country country on country.id=address.country inner join gst_state state on state.id=address.state inner join meta_file file on file.id=company.image 
+            <xml-property name="queryText"><![CDATA[select invoice.net_amount as TotalAmount,
+invoice.netcgst as NetCGST,invoice.netigst as NetIGST,invoice.netsgst as NetSGST,invoice.gross_amount as totalGross,invoiceLine.cgst as CGST,invoiceLine.sgst as SGST,invoiceLine.igst as IGST ,invoiceLine.gross_amount as GrossAmount,invoiceLine.qty,company.name as CompanyName ,address.line1,address.line2,address.city,city.name,address.pin_code,state.name,country.name,file.file_name,file.file_path from gst_invoice invoice inner join gst_invoice_invoice_items_list list on list.gst_invoice=invoice.id inner join gst_invoice_line invoiceLine on list.invoice_items_list=invoiceLine.id inner join gst_company company on company.id=invoice.company inner join gst_address address on address.id=company.address inner join gst_city city on city.id=address.city inner join gst_country country on country.id=address.country inner join gst_state state on state.id=address.state inner join meta_file file on file.id=company.image 
 where invoice.id=?;
 ]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
   <Version>2.0</Version>
-  <DataSetParameters>
-    <parameter>
-      <design:ParameterDefinition>
-        <design:inOutMode>In</design:inOutMode>
-        <design:attributes>
-          <design:identifier>
-            <design:name></design:name>
-            <design:position>1</design:position>
-          </design:identifier>
-          <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
-          <design:precision>0</design:precision>
-          <design:scale>0</design:scale>
-          <design:nullability>Unknown</design:nullability>
-        </design:attributes>
-      </design:ParameterDefinition>
-    </parameter>
-  </DataSetParameters>
   <design:ResultSets derivedMetaData="true">
     <design:resultSetDefinitions>
       <design:resultSetColumns>

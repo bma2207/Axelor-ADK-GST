@@ -7,7 +7,7 @@
 
 	<grid name="product-grid" model="com.axelor.gst.db.Product" title="product-grid">
 		<toolbar>
-			<button name="invoice" title="Invoice" onClick="" />
+			<button name="invoice" title="Invoice" onClick="action-product-gst" />
 		</toolbar>
 		<field name="name" />
 		<field name="code" />
@@ -74,4 +74,7 @@
 	<action-record name="gst-product-category" model="com.axelor.gst.db.Product">
 		<field name="gstRate" expr="eval:product.gstRate" />
 	</action-record>
+	<action-method name="action-product-gst">
+	<call class="com.axelor.gst.controller.Invoicelinecontroller" method="openPrintWizard"/>
+	</action-method>
 </object-views>

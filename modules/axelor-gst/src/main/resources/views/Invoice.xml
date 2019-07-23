@@ -12,7 +12,6 @@
 	</selection>
 
 
-
 	<grid name="invoice-grid" model="com.axelor.gst.db.Invoice" title="invoice-grid">
 		<field name="status" widget="nav-select" selection="invoiceStatus"
 			readonly="true" />
@@ -63,18 +62,19 @@
 	</kanban>
 
 	<form name="invoice-form" model="com.axelor.gst.db.Invoice" title="invoice-form"
-		width="large" css="panel-pink">
+		width="large" css="panel-pink" onNew="action-gst-product-ids">
 		<toolbar>
-		  <button name="btnPrint" title="Print" showTitle="false" showIf="id" onClick="action-TakeImagePath-On-click" icon="fa-print"  />
+			<button name="btnPrint" title="Print" showTitle="false"
+				showIf="id" onClick="action-TakeImagePath-On-click" icon="fa-print" />
 		</toolbar>
+
 		<panel title="Create Invoice" colSpan="12">
 			<field name="reference" required="true" title="Reference"
 				colSpan="4" />
 			<field name="status" widget="nav-select" readonly="true"
 				colSpan="8" />
-
-
 		</panel>
+
 		<panel title="Party Details" colSpan="12">
 			<field name="party" title="Party Name"
 				onChange="com.axelor.gst.controller.Invoicelinecontroller:setPartyContact" />
@@ -93,11 +93,11 @@
 			<field name="netIGST" title="Net IGST" readonly="true" />
 			<field name="netSGST" title="Net SGST" readonly="true" />
 			<field name="netCGST" title="Net CGST" readonly="true" />
-
 			<field name="grossAmount" title="Gross Amount" readonly="true" />
 		</panel>
 
-		<panel title="Invoice Items List" colSpan="12" hideIf="invoiceAddress == null OR company == null">
+		<panel title="Invoice Items List" colSpan="12" hidden="true"
+			showIf="invoiceAddress != null &amp;&amp; company !=null">
 			<field name="invoiceItemsList" colSpan="12" onChange="action-calculation" />
 		</panel>
 
@@ -111,18 +111,23 @@
 			<button name="draft" title="Draft" onClick="action-draft"
 				hidden="true" showIf="status == 'validated' " />
 		</panel>
+
 		<panel sidebar="true">
 			<field name="createdOn" />
 			<field name="updatedOn" />
 		</panel>
 		<panel sidebar="true">
 			<field name="company" title="Company" />
-			<field name="dateTime" title="Date Of Invoice" />
+			<field name="dateTime" title="Date Of Invoice" expr="eval:  __datetime__" />
 			<field name="priority" title="Priority" />
 		</panel>
 	</form>
 
-
+	<action-record name="action-gst-invoice-record-default-dt"
+		model="com.axelor.gst.db.Invoice">
+		<field name="dateTime" expr="eval: __datetime__" />
+		<field name="company" expr="eval: __repo__(Company).all().fetchOne() " />
+	</action-record>
 	<action-attrs name="action-validation">
 		<attribute name="value" for="status" expr="validated" />
 	</action-attrs>
@@ -143,9 +148,9 @@
 		<call class="com.axelor.gst.controller.Invoicelinecontroller"
 			method="onCalculation" />
 	</action-method>
-	
-	
-	
+
+
+
 
 	<action-report name="print.WithImage" design="invoice.rptdesign"
 		output="so-${date}${time}" format="pdf">
@@ -158,8 +163,16 @@
 		<action name="action-AttechMentPath" />
 		<action name="print.WithImage" />
 	</action-group>
-	 <action-method name="action-AttechMentPath">
-    <call class="com.axelor.gst.controller.ReportImagePath" method="ImagePath"/>
-  </action-method>
+	<action-method name="action-AttechMentPath">
+		<call class="com.axelor.gst.controller.ReportImagePath" method="ImagePath" />
+	</action-method>
+	<action-method name="action-gst-product">
+		<call class="com.axelor.gst.controller.Invoicelinecontroller"
+			method="productIds" />
+	</action-method>
+	<action-group name="action-gst-product-ids">
+		<action name="action-gst-product" />
+		<action name="action-gst-invoice-record-default-dt" />
+	</action-group>
 
 </object-views>

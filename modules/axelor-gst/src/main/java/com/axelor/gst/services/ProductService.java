@@ -1,6 +1,11 @@
 package com.axelor.gst.services;
 
+import java.util.List;
+
+import com.axelor.gst.db.Product;
+
 public interface ProductService {
 
-	void  onConfirm();
+	List<Product> productList(List<Integer> list);
+	
 }
