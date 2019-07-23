@@ -185,23 +185,30 @@ public class Invoicelinecontroller extends JpaSupport {
 	public void openPrintWizard(ActionRequest request, ActionResponse response) {
 	    Product  product = request.getContext().asType(Product.class);
 
+	    
 	    @SuppressWarnings("unchecked")
 	    List<Integer> lstSelectedLocations = (List<Integer>) request.getContext().get("_ids");
-       
+	    if(lstSelectedLocations !=null)
+	    {
 	    response.setView(
 	        ActionView.define(I18n.get("hello"))
 	            .model("com.axelor.gst.db.Invoice")
 	            .add("form", "invoice-form")
 	            .context("productIds", lstSelectedLocations)
 	            .map());
+	    }
 	  }
 	public void productIds(ActionRequest request, ActionResponse response)
 	{
 		
+		if(request.getContext().get("productIds") != null)
+		{
 		Invoice invoice=request.getContext().asType(Invoice.class);
 		List<Integer> productids = (List<Integer>) request.getContext().get("productIds");
 	    List<Product>  productList =(List<Product>) service.productList(productids);
 	    List<InvoiceLine> invoiceList=new ArrayList<InvoiceLine>();
+	  
+	    System.err.println("values"+productids);
 	   
 	    for (Product productObj : productList) {
 	    	InvoiceLine invoiceLine=new InvoiceLine();
@@ -215,8 +222,8 @@ public class Invoicelinecontroller extends JpaSupport {
 	    	
 		}
 	    response.setValue("invoiceItemsList", invoiceList);
-	    
-	   
+	    }
 	}
+	
 	
 }
