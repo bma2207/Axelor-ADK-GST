@@ -98,7 +98,7 @@
 
 	<menuitem name="gst-root-invoiceCanceled" parent="gst-root-invoices"
 		title="Canceled Invoice" action="cancelInvoice.all" />
-	<menuitem name="gst-root-invoicePaid" parent="gst-root-invoices"
+	<menuitem name="gst-root-invoiceAll" parent="gst-root-invoices"
 		title="All Invoice" action="allInvoice.all" />
 
 	<action-view name="invoice.all" title="Invoice"

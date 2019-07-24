@@ -17,19 +17,27 @@
 
 	</grid>
 
-	<form name="sequence-form" model="com.axelor.gst.db.Sequence" title="sequence-form" width="large" css="panel-pink">
+	<form name="sequence-form" model="com.axelor.gst.db.Sequence" title="sequence-form" width="large" css="panel-pink" onSave="action-sequence">
 		<panel title="Create Sequence" colSpan="12">
 			<field name="prefix" required="true" title="Prifix"/>
 			<field name="suffix" title="Suffix"/>
 			<field name="padding" title="Padding"/>
 			<field name="nextNumber" title="Next Number" readonly="true"/>
 			<field name="model" required="true" title="Model"/>
-			<button name="test" title="tset" onClick="com.axelor.gst.controller.SequenceCreate:generateSequence"/>
+			
 		</panel>
 		<panel sidebar="true">
 			<field name="createdOn" />
 			<field name="updatedOn" />
 		</panel>
 	</form>
+	<action-method name="action-generateSequence">
+	<call class="com.axelor.gst.controller.SequenceCreate" method="generateSequence"/>
+	
+	</action-method>
+
+	<action-group name="action-sequence">
+	<action name="action-generateSequence"/>
+	</action-group>
 
 </object-views>

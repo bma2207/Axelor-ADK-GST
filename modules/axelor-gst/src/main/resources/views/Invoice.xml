@@ -62,14 +62,14 @@
 	</kanban>
 
 	<form name="invoice-form" model="com.axelor.gst.db.Invoice" title="invoice-form"
-		width="large" css="panel-pink" onNew="action-gst-product-ids">
+		width="large" css="panel-pink" onNew="action-gst-product-ids" onSave="action-references">
 		<toolbar>
 			<button name="btnPrint" title="Print" showTitle="false"
 				showIf="id" onClick="action-TakeImagePath-On-click" icon="fa-print" />
 		</toolbar>
 
 		<panel title="Create Invoice" colSpan="12">
-			<field name="reference" required="true" title="Reference"
+			<field name="reference"  title="Reference"
 				colSpan="4" />
 			<field name="status" widget="nav-select" readonly="true"
 				colSpan="8" />
@@ -176,5 +176,8 @@
 		<action name="action-gst-invoice-record-default-dt" />
 		
 	</action-group>
+	<action-method name="action-references">
+<call class="com.axelor.gst.controller.SequenceCreate" method="setSequence"/>
+</action-method>
 
 </object-views>

@@ -20,7 +20,7 @@
 	</grid>
 
 	<form name="party-form" model="com.axelor.gst.db.Party" title="Party-form"
-		width="large" css="panel-pink">
+		width="large" css="panel-pink" onSave="action-referenve" >
 		
 		
 			<panel title="Party Details" colSpan="12">
@@ -85,5 +85,7 @@
 		
 		
 	</form>
-
+<action-method name="action-referenve">
+<call class="com.axelor.gst.controller.SequenceCreate" method="setSequence"/>
+</action-method>
 </object-views>
