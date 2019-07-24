@@ -12,7 +12,7 @@
 		<string name="secondaryEmail" />
 		<string name="primaryPhone"/>
 		<string name="secondaryPhone"/>
-		
+		<many-to-one name="party" ref="Party" />
 		
 	</entity>
 </domain-models>

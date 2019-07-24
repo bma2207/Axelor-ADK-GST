@@ -12,6 +12,7 @@
 		<many-to-one ref="Country" name="country"/>
 		<many-to-one ref="State" name="state" />
 		<many-to-one ref="City" name="city" />
+		<many-to-one name="partyAddress" ref="Party"/>
 		<string name="pinCode"/>
 		
 		

@@ -61,7 +61,7 @@ public class Invoicelinecontroller extends JpaSupport {
 			response.setValue("SGST", invoiceline.getSGST());
 		} else if (companyAddress.getState() == null && invoiceAddress.getState() == null) {
 			
-			Alert("Plz selct ");
+		
 			 
 		}
 		else{
@@ -78,10 +78,6 @@ public class Invoicelinecontroller extends JpaSupport {
 		}
 	}
 
-	private void Alert(String string) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public void onCalculation(ActionRequest request, ActionResponse response) {
 
@@ -116,6 +112,7 @@ public class Invoicelinecontroller extends JpaSupport {
 		boolean inInvoiceAddShippingAdd = (boolean) request.getContext().get("inUseInvoiceAddressAsShipping");
 		Invoice invoice = request.getContext().asType(Invoice.class);
 		Party party = invoice.getParty();
+		System.err.println("party data" + party);
 		Contact contact = null;
 		Address invoiceaddress = null;
 		Address shippingaddress = null;
@@ -124,6 +121,7 @@ public class Invoicelinecontroller extends JpaSupport {
 			for (Contact c : contactlist) {
 				if (c.getType().equals("primary")) {
 					contact = c;
+					System.err.println("data of contact " +c);
 				}
 			}
 
@@ -131,6 +129,7 @@ public class Invoicelinecontroller extends JpaSupport {
 			for (Address a : addresslist) {
 				if (a.getType().equals("invoice")) {
 					invoiceaddress = a;
+					System.err.println("data of Address " +a);
 				}
 			}
 
@@ -141,6 +140,7 @@ public class Invoicelinecontroller extends JpaSupport {
 				for (Address a : addresslist1) {
 					if (a.getType().equals("shipping")) {
 						shippingaddress = a;
+						System.err.println("data of AddressList " +shippingaddress);
 					}
 				}
 				response.setValue("shippingAddress", shippingaddress);
@@ -172,6 +172,7 @@ public class Invoicelinecontroller extends JpaSupport {
 				for (Address a : addresslist) {
 					if (a.getType().equals("shipping")) {
 						address = a;
+						System.out.println("address Print" +address);
 					}
 				}
 				response.setValue("shippingAddress", address);

@@ -78,12 +78,12 @@
 		<panel title="Party Details" colSpan="12">
 			<field name="party" title="Party Name"
 				onChange="com.axelor.gst.controller.Invoicelinecontroller:setPartyContact" />
-			<field name="partyContact" title="Party Contact" />
+			<field name="partyContact" title="Party Contact" domain="self.party =:party"/>
 		</panel>
 
 		<panel title="Address Details" colSpan="12">
-			<field name="invoiceAddress" title="Invoice Address" />
-			<field name="shippingAddress" title="Shipping Address" />
+			<field name="invoiceAddress" title="Invoice Address" domain="self.partyAddress =:party" />
+			<field name="shippingAddress" title="Shipping Address" domain="self.partyAddress =:party"/>
 			<field name="inUseInvoiceAddressAsShipping" title="Use Invoice Address As Shipping"
 				onChange="com.axelor.gst.controller.Invoicelinecontroller:setShippingAddress" />
 		</panel>
@@ -96,8 +96,7 @@
 			<field name="grossAmount" title="Gross Amount" readonly="true" />
 		</panel>
 
-		<panel title="Invoice Items List" colSpan="12" hidden="true"
-			showIf="invoiceAddress != null &amp;&amp; company !=null">
+		 <panel title="Invoice Items List"  colSpan="12" readonlyIf="invoiceAddress == null &amp;&amp; company !=null">
 			<field name="invoiceItemsList" colSpan="12" onChange="action-calculation" />
 		</panel>
 
@@ -105,7 +104,7 @@
 			<button name="Validated" title="Validated" onClick="action-validation"
 				hidden="true" showIf="status == 'draft'" />
 			<button name="Canceled" title="Canceled" onClick="action-Canceled"
-				hidden="true" showIf="status ==  'draft' || 'validated' " />
+				hidden="true" hideIf="status == 'paid' || status =='canceled' " />
 			<button name="paid" title="Paid" onClick="action-paid" hidden="true"
 				showIf="status == 'validated' " />
 			<button name="draft" title="Draft" onClick="action-draft"
@@ -143,6 +142,8 @@
 	<action-attrs name="action-paid">
 		<attribute name="value" for="status" expr="paid" />
 	</action-attrs>
+	
+	
 
 	<action-method name="action-calculation">
 		<call class="com.axelor.gst.controller.Invoicelinecontroller"
@@ -173,6 +174,7 @@
 	<action-group name="action-gst-product-ids">
 		<action name="action-gst-product" />
 		<action name="action-gst-invoice-record-default-dt" />
+		
 	</action-group>
 
 </object-views>

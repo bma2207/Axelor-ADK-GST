@@ -12,7 +12,7 @@
 	    <boolean name="customer"/>
 		<boolean name="supplier"/>
 		<string name="GSTIN"/>
-		<one-to-many name="contactList" ref="Contact" />
-		<one-to-many name="addressList" ref="Address" />
+		<one-to-many name="contactList" ref="Contact" mappedBy="party"/>
+		<one-to-many name="addressList" ref="Address"  mappedBy="partyAddress"/>
 	</entity>
 </domain-models>
