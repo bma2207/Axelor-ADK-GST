@@ -69,8 +69,7 @@
 		</toolbar>
 
 		<panel title="Create Invoice" colSpan="12">
-			<field name="reference"  title="Reference"
-				colSpan="4" />
+			<field name="reference" title="Reference" colSpan="4" />
 			<field name="status" widget="nav-select" readonly="true"
 				colSpan="8" />
 		</panel>
@@ -78,12 +77,12 @@
 		<panel title="Party Details" colSpan="12">
 			<field name="party" title="Party Name"
 				onChange="com.axelor.gst.controller.Invoicelinecontroller:setPartyContact" />
-			<field name="partyContact" title="Party Contact" domain="self.party =:party"/>
+			<field name="partyContact" title="Party Contact" domain="self.party =:party" />
 		</panel>
 
 		<panel title="Address Details" colSpan="12">
 			<field name="invoiceAddress" title="Invoice Address" domain="self.partyAddress =:party" />
-			<field name="shippingAddress" title="Shipping Address" domain="self.partyAddress =:party"/>
+			<field name="shippingAddress" title="Shipping Address" domain="self.partyAddress =:party" />
 			<field name="inUseInvoiceAddressAsShipping" title="Use Invoice Address As Shipping"
 				onChange="com.axelor.gst.controller.Invoicelinecontroller:setShippingAddress" />
 		</panel>
@@ -96,7 +95,8 @@
 			<field name="grossAmount" title="Gross Amount" readonly="true" />
 		</panel>
 
-		 <panel title="Invoice Items List"  colSpan="12" readonlyIf="invoiceAddress == null &amp;&amp; company !=null">
+		<panel title="Invoice Items List" colSpan="12"
+			readonlyIf="invoiceAddress == null &amp;&amp; company !=null">
 			<field name="invoiceItemsList" colSpan="12" onChange="action-calculation" />
 		</panel>
 
@@ -127,6 +127,7 @@
 		<field name="dateTime" expr="eval: __datetime__" />
 		<field name="company" expr="eval: __repo__(Company).all().fetchOne() " />
 	</action-record>
+	
 	<action-attrs name="action-validation">
 		<attribute name="value" for="status" expr="validated" />
 	</action-attrs>
@@ -142,8 +143,8 @@
 	<action-attrs name="action-paid">
 		<attribute name="value" for="status" expr="paid" />
 	</action-attrs>
-	
-	
+
+
 
 	<action-method name="action-calculation">
 		<call class="com.axelor.gst.controller.Invoicelinecontroller"
@@ -174,10 +175,10 @@
 	<action-group name="action-gst-product-ids">
 		<action name="action-gst-product" />
 		<action name="action-gst-invoice-record-default-dt" />
-		
+
 	</action-group>
 	<action-method name="action-references">
-<call class="com.axelor.gst.controller.SequenceCreate" method="setSequence"/>
-</action-method>
+		<call class="com.axelor.gst.controller.SequenceCreate" method="setSequence" />
+	</action-method>
 
 </object-views>

@@ -51,6 +51,7 @@ public class SequenceCreate extends JpaSupport {
 		response.setValue("nextNumber", seqs.getNextNumber());
 		
 	}
+	
 	@Transactional
 	public void setSequence(ActionRequest request, ActionResponse response)
 	{

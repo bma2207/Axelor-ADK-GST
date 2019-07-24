@@ -59,22 +59,24 @@ public class Invoicelinecontroller extends JpaSupport {
 			response.setValue("grossAmount", invoiceline.getGrossAmount());
 			response.setValue("CGST", invoiceline.getCGST());
 			response.setValue("SGST", invoiceline.getSGST());
-		} else if (companyAddress.getState() == null && invoiceAddress.getState() == null) {
-			
-		
-			 
-		}
+		} 
 		else{
 
 			BigDecimal igst = BigDecimal.ZERO;
+			BigDecimal cgst = new BigDecimal("0.00");
+			BigDecimal sgst = new BigDecimal("0.00");
 			BigDecimal valueigst = invoiceline.getNetAmount();
 			gst = gst.add(invoiceline.getGstRate().multiply(valueigst));
 			igst = igst.add(gst);
-			valueigst = valueigst.add(igst);
-			invoiceline.setGrossAmount(valueigst);
+			value = valueigst.add(igst);
+			invoiceline.setGrossAmount(value);
 			invoiceline.setIGST(igst);
+			invoiceline.setCGST(cgst);
+			invoiceline.setSGST(sgst);
 			response.setValue("IGST", invoiceline.getIGST());
 			response.setValue("grossAmount", invoiceline.getGrossAmount());
+			response.setValue("CGST",invoiceline.getCGST());
+			response.setValue("SGST", invoiceline.getSGST());
 		}
 	}
 
@@ -161,7 +163,6 @@ public class Invoicelinecontroller extends JpaSupport {
 		boolean inInvoiceAddShippingAdd = (boolean) request.getContext().get("inUseInvoiceAddressAsShipping");
 		Invoice invoice = request.getContext().asType(Invoice.class);
 		Address invoiceaddress = invoice.getInvoiceAddress();
-
 		Party party = invoice.getParty();
 		Address address = null;
 		if (party != null) {

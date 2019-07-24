@@ -12,23 +12,13 @@ public class ProductServiceIMP implements ProductService {
 
 	@Override
 	public List<Product> productList(List<Integer> lstSelectedLocations) {
-		// TODO Auto-generated method stub
-		
-		Product pr=new Product();
+		Product pr = new Product();
 		List<Product> productLst = new ArrayList<>();
-		//System.out.println("print Ids  of Product" + pr );
-		
 		for (int _id : lstSelectedLocations) {
-			
-			System.out.println("print Ids  of Product" + _id );
-			 pr=Beans.get(ProductRepository.class).find(Long.parseLong(""+_id));
-			 productLst.add(pr);
+			pr = Beans.get(ProductRepository.class).find(Long.parseLong("" + _id));
+			productLst.add(pr);
 		}
-		
 		return productLst;
 	}
-
-	
-	
 
 }
