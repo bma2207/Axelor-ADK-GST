@@ -11,7 +11,7 @@
 		<string name="item" />
 		<integer name="qty" />
 		<decimal name="price" />
-		<decimal name="netAmount" />
+		<decimal name="netAmount"  default="1"/>
 		<decimal name="gstRate"  />
 		<decimal name="IGST"  />
 		<decimal name="SGST" />

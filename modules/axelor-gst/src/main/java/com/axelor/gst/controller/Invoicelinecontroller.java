@@ -21,9 +21,7 @@ import com.axelor.rpc.ActionResponse;
 import com.google.inject.Inject;
 
 public class Invoicelinecontroller extends JpaSupport {
-   
-	@Inject
-	private ProductServiceIMP service;
+
 	public void calnetamount(ActionRequest request, ActionResponse response) {
 
 		InvoiceLine invoiceline = request.getContext().asType(InvoiceLine.class);
@@ -45,6 +43,7 @@ public class Invoicelinecontroller extends JpaSupport {
 			BigDecimal grossValues = BigDecimal.ZERO;
 			BigDecimal sgst = BigDecimal.ZERO;
 			BigDecimal cgst = BigDecimal.ZERO;
+			BigDecimal igst = new BigDecimal("0.00");
 			BigDecimal bg1 = new BigDecimal("2");
 			BigDecimal valueigst = invoiceline.getNetAmount();
 			gst = gst.add(invoiceline.getGstRate().multiply(valueigst));
@@ -53,14 +52,15 @@ public class Invoicelinecontroller extends JpaSupport {
 			cgst = cgst.add(dividevalue);
 			invoiceline.setCGST(cgst);
 			invoiceline.setSGST(sgst);
+			invoiceline.setIGST(igst);
 			valueigst = valueigst.add(cgst);
 			grossValues = cgst.add(valueigst);
 			invoiceline.setGrossAmount(grossValues);
 			response.setValue("grossAmount", invoiceline.getGrossAmount());
 			response.setValue("CGST", invoiceline.getCGST());
 			response.setValue("SGST", invoiceline.getSGST());
-		} 
-		else{
+			response.setValue("IGST", invoiceline.getIGST());
+		} else {
 
 			BigDecimal igst = BigDecimal.ZERO;
 			BigDecimal cgst = new BigDecimal("0.00");
@@ -75,25 +75,24 @@ public class Invoicelinecontroller extends JpaSupport {
 			invoiceline.setSGST(sgst);
 			response.setValue("IGST", invoiceline.getIGST());
 			response.setValue("grossAmount", invoiceline.getGrossAmount());
-			response.setValue("CGST",invoiceline.getCGST());
+			response.setValue("CGST", invoiceline.getCGST());
 			response.setValue("SGST", invoiceline.getSGST());
 		}
 	}
-
 
 	public void onCalculation(ActionRequest request, ActionResponse response) {
 
 		Invoice invoice = request.getContext().asType(Invoice.class);
 		List<InvoiceLine> invoiceLines = invoice.getInvoiceItemsList();
 		BigDecimal cgst = null, sgst = null, igst = null, netamount = null, grossamount = null;
-		Integer qty=null;
+		Integer qty = null;
 		for (InvoiceLine invoiceLine : invoiceLines) {
-			cgst=invoiceLine.getCGST().add(invoice.getNetCGST());
-			sgst=invoiceLine.getSGST().add(invoice.getNetSGST());
-			igst=invoiceLine.getIGST().add(invoice.getNetIGST());
-			netamount=invoiceLine.getNetAmount().add(invoice.getNetAmount());
-			grossamount=invoiceLine.getGrossAmount().add(invoice.getNetCGST());
-	
+			cgst = invoiceLine.getCGST().add(invoice.getNetCGST());
+			sgst = invoiceLine.getSGST().add(invoice.getNetSGST());
+			igst = invoiceLine.getIGST().add(invoice.getNetIGST());
+			netamount = invoiceLine.getNetAmount().add(invoice.getNetAmount());
+			grossamount = invoiceLine.getGrossAmount().add(invoice.getNetCGST());
+
 		}
 		invoice.setNetCGST(cgst);
 		invoice.setNetSGST(sgst);
@@ -101,20 +100,18 @@ public class Invoicelinecontroller extends JpaSupport {
 		invoice.setNetAmount(netamount);
 		invoice.setGrossAmount(grossamount);
 
-		
-		
-		response.setValue("netAmount",invoice.getNetAmount());
-		  response.setValue("netSGST", invoice.getNetSGST());
-		 response.setValue("netCGST", invoice.getNetCGST());
-		  response.setValue("grossAmount", invoice.getGrossAmount());
-		 
+		response.setValue("netAmount", invoice.getNetAmount());
+		response.setValue("netSGST", invoice.getNetSGST());
+		response.setValue("netCGST", invoice.getNetCGST());
+		response.setValue("grossAmount", invoice.getGrossAmount());
+
 	}
 
 	public void setPartyContact(ActionRequest request, ActionResponse response) {
 		boolean inInvoiceAddShippingAdd = (boolean) request.getContext().get("inUseInvoiceAddressAsShipping");
 		Invoice invoice = request.getContext().asType(Invoice.class);
 		Party party = invoice.getParty();
-		System.err.println("party data" + party);
+
 		Contact contact = null;
 		Address invoiceaddress = null;
 		Address shippingaddress = null;
@@ -123,7 +120,6 @@ public class Invoicelinecontroller extends JpaSupport {
 			for (Contact c : contactlist) {
 				if (c.getType().equals("primary")) {
 					contact = c;
-					System.err.println("data of contact " +c);
 				}
 			}
 
@@ -131,7 +127,6 @@ public class Invoicelinecontroller extends JpaSupport {
 			for (Address a : addresslist) {
 				if (a.getType().equals("invoice")) {
 					invoiceaddress = a;
-					System.err.println("data of Address " +a);
 				}
 			}
 
@@ -142,7 +137,7 @@ public class Invoicelinecontroller extends JpaSupport {
 				for (Address a : addresslist1) {
 					if (a.getType().equals("shipping")) {
 						shippingaddress = a;
-						System.err.println("data of AddressList " +shippingaddress);
+						System.err.println("data of AddressList " + shippingaddress);
 					}
 				}
 				response.setValue("shippingAddress", shippingaddress);
@@ -173,59 +168,14 @@ public class Invoicelinecontroller extends JpaSupport {
 				for (Address a : addresslist) {
 					if (a.getType().equals("shipping")) {
 						address = a;
-						System.out.println("address Print" +address);
+						
 					}
 				}
 				response.setValue("shippingAddress", address);
 			}
-		} 
-		else {
+		} else {
 			response.setValue("shippingAddress", address);
 		}
 	}
-	
-	public void openPrintWizard(ActionRequest request, ActionResponse response) {
-	    Product  product = request.getContext().asType(Product.class);
 
-	    
-	    @SuppressWarnings("unchecked")
-	    List<Integer> lstSelectedLocations = (List<Integer>) request.getContext().get("_ids");
-	    if(lstSelectedLocations !=null)
-	    {
-	    response.setView(
-	        ActionView.define(I18n.get("hello"))
-	            .model("com.axelor.gst.db.Invoice")
-	            .add("form", "invoice-form")
-	            .context("productIds", lstSelectedLocations)
-	            .map());
-	    }
-	  }
-	public void productIds(ActionRequest request, ActionResponse response)
-	{
-		
-		if(request.getContext().get("productIds") != null)
-		{
-		Invoice invoice=request.getContext().asType(Invoice.class);
-		List<Integer> productids = (List<Integer>) request.getContext().get("productIds");
-	    List<Product>  productList =(List<Product>) service.productList(productids);
-	    List<InvoiceLine> invoiceList=new ArrayList<InvoiceLine>();
-	  
-	    System.err.println("values"+productids);
-	   
-	    for (Product productObj : productList) {
-	    	InvoiceLine invoiceLine=new InvoiceLine();
-	    	invoiceLine.setProduct(productObj);
-	    	invoiceLine.setGstRate(productObj.getGstRate());
-	    	invoiceLine.setPrice(productObj.getSalePrice());
-	    	invoiceLine.setItem('[' + productObj.getCode() + ']' + productObj.getName());
-	    	invoiceLine.setQty(1);
-	    	
-	    	invoiceList.add(invoiceLine);
-	    	
-		}
-	    response.setValue("invoiceItemsList", invoiceList);
-	    }
-	}
-	
-	
 }

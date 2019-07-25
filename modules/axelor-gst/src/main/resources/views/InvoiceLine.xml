@@ -21,13 +21,13 @@
 	</grid>
 
 	<form name="invoiceLine-form" model="com.axelor.gst.db.InvoiceLine"
-		title="invoiceLine-form" width="large" onLoad="gst-product-category-items">
+		title="invoiceLine-form" width="large" onLoad="gst-product-category-items" onNew="gst-product-qty">
 		<panel title="Invoice Line" colSpan="12">
 			<field name="product" title="Product" onChange="action-gst-invoice-product-select"/>
 			<field name="HSBN" title="HSBN"/>
 			<field name="item" required="true" title="Item" />
-			<field name="qty" title="Quantity" onChange="com.axelor.gst.controller.Invoicelinecontroller:calnetamount"/>
-			<field name="price" title="Price"  onChange="com.axelor.gst.controller.Invoicelinecontroller:calnetamount"/>
+			<field name="qty" title="Quantity" onChange="action-calculation-qty"/>
+			<field name="price" title="Price"  onChange="action-calculation-price"/>
 			<field name="netAmount" required="true" title="Net amount" readonly="true"/>
 			<field name="gstRate" required="true" title="GST Rate" readonly="true"/>
 			<field name="IGST" required="true" title="IGST" readonly="true"/>
@@ -46,12 +46,19 @@
 	<action-attrs name="gst-product-category-itemPrice">
 	<attribute name="value" for="price" expr="eval: product.salePrice"/>
 	</action-attrs>
+	<action-attrs name="gst-product-qty">
+	<attribute name="value" for="qty" expr="eval: 1"/>
+	</action-attrs>
 	
 	<action-group name="action-gst-invoice-product-select">
 	<action name="gst-product-category"/>
 	<action name="gst-product-category-item"/>
 	<action name="gst-product-category-itemPrice"/>
 	</action-group>
-
-	
+	<action-method name="action-calculation-price">
+	<call class="com.axelor.gst.controller.Invoicelinecontroller" method="calnetamount"/>
+	</action-method>
+	<action-method name="action-calculation-qty">
+	<call class="com.axelor.gst.controller.Invoicelinecontroller" method="calnetamount"/>
+	</action-method>
 </object-views>

@@ -1,0 +1,33 @@
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.1.xsd">
+
+<chart name="chart.sales.by.customer" title="Sales by customer">
+<search-fields> 
+     <field type="datetime" name="fromDateTime" title="From Date"/>
+     <field type="datetime" name="toDateTime" title="To Date"/>
+  </search-fields>
+    <dataset type="jpql">
+    <![CDATA[
+   SELECT
+        SUM(self.grossAmount) AS amount,
+         MONTH(self.dateTime) AS month,
+        _party.name AS PartyName
+    FROM
+        Invoice self
+    LEFT JOIN
+        self.party AS _party
+    WHERE
+         WHERE
+      YEAR(self.dateTime) = YEAR(current_date)
+      AND self.dateTime > :fromDateTime
+      AND self.dateTime < :toDateTime
+    GROUP BY
+        _party.name,
+        MONTH(self.dateTime)
+    ]]>
+    </dataset>
+    <category key="month" type="month"/>
+    <series key="amount" groupBy="customer" type="bar"/>
+  </chart>
+</object-views>

@@ -76,12 +76,13 @@
 
 		<panel title="Party Details" colSpan="12">
 			<field name="party" title="Party Name"
-				onChange="com.axelor.gst.controller.Invoicelinecontroller:setPartyContact" />
+				onChange="action-group-of-set-check-party-address" />
 			<field name="partyContact" title="Party Contact" domain="self.party =:party" />
 		</panel>
 
 		<panel title="Address Details" colSpan="12">
-			<field name="invoiceAddress" title="Invoice Address" domain="self.partyAddress =:party" />
+			<field name="invoiceAddress" title="Invoice Address" domain="self.partyAddress =:party"
+				onChange="action-group-invoiceLitCalculation" />
 			<field name="shippingAddress" title="Shipping Address" domain="self.partyAddress =:party" />
 			<field name="inUseInvoiceAddressAsShipping" title="Use Invoice Address As Shipping"
 				onChange="com.axelor.gst.controller.Invoicelinecontroller:setShippingAddress" />
@@ -127,7 +128,7 @@
 		<field name="dateTime" expr="eval: __datetime__" />
 		<field name="company" expr="eval: __repo__(Company).all().fetchOne() " />
 	</action-record>
-	
+
 	<action-attrs name="action-validation">
 		<attribute name="value" for="status" expr="validated" />
 	</action-attrs>
@@ -144,15 +145,10 @@
 		<attribute name="value" for="status" expr="paid" />
 	</action-attrs>
 
-
-
 	<action-method name="action-calculation">
 		<call class="com.axelor.gst.controller.Invoicelinecontroller"
 			method="onCalculation" />
 	</action-method>
-
-
-
 
 	<action-report name="print.WithImage" design="invoice.rptdesign"
 		output="so-${date}${time}" format="pdf">
@@ -169,8 +165,7 @@
 		<call class="com.axelor.gst.controller.ReportImagePath" method="ImagePath" />
 	</action-method>
 	<action-method name="action-gst-product">
-		<call class="com.axelor.gst.controller.Invoicelinecontroller"
-			method="productIds" />
+		<call class="com.axelor.gst.controller.ProductIds" method="productIdsList" />
 	</action-method>
 	<action-group name="action-gst-product-ids">
 		<action name="action-gst-product" />
@@ -180,5 +175,32 @@
 	<action-method name="action-references">
 		<call class="com.axelor.gst.controller.SequenceCreate" method="setSequence" />
 	</action-method>
+	<action-method name="action-invoiceListCalculation">
+		<call class="com.axelor.gst.controller.InvoiceListCalculation"
+			method="CalculateinvoiceList" />
+	</action-method>
+	<action-method name="action-calculation-price">
+		<call class="com.axelor.gst.controller.Invoicelinecontroller"
+			method="calnetamount" />
+	</action-method>
+	<action-group name="action-group-invoiceLitCalculation">
+		<action name="action-invoiceListCalculation" />
+		<action name="action-calculation" />
+	</action-group>
+	<action-method name="action-prty-address-set">
+		<call class="com.axelor.gst.controller.Invoicelinecontroller"
+			method="setPartyContact" />
+	</action-method>
+	<action-method name="action-prty-address-check">
+		<call class="com.axelor.gst.controller.PartySelection" method="CalculateinvoiceList" />
+	</action-method>
+	<action-method name="action-party-invoice-calculaion">
+	<call class="com.axelor.gst.controller.PartySelection" method="onCalculation"/>
+	</action-method>
+	<action-group name="action-group-of-set-check-party-address">
+		<action name="action-prty-address-check" />
+		<action name="action-prty-address-set" />
+		<action name="action-party-invoice-calculaion"/>
+	</action-group>
 
 </object-views>
