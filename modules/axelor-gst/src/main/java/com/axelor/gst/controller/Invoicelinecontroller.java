@@ -43,28 +43,24 @@ public class Invoicelinecontroller extends JpaSupport {
 			BigDecimal grossValues = BigDecimal.ZERO;
 			BigDecimal sgst = BigDecimal.ZERO;
 			BigDecimal cgst = BigDecimal.ZERO;
-			BigDecimal igst = new BigDecimal("0.00");
-			BigDecimal bg1 = new BigDecimal("2");
+			BigDecimal igst = BigDecimal.ZERO;
 			BigDecimal valueigst = invoiceline.getNetAmount();
 			gst = gst.add(invoiceline.getGstRate().multiply(valueigst));
-			BigDecimal dividevalue = gst.divide(bg1);
+			BigDecimal dividevalue = gst.divide(new BigDecimal(2));
 			sgst = sgst.add(dividevalue);
-			cgst = cgst.add(dividevalue);
+			cgst = sgst;
 			invoiceline.setCGST(cgst);
 			invoiceline.setSGST(sgst);
 			invoiceline.setIGST(igst);
 			valueigst = valueigst.add(cgst);
 			grossValues = cgst.add(valueigst);
 			invoiceline.setGrossAmount(grossValues);
-			response.setValue("grossAmount", invoiceline.getGrossAmount());
-			response.setValue("CGST", invoiceline.getCGST());
-			response.setValue("SGST", invoiceline.getSGST());
-			response.setValue("IGST", invoiceline.getIGST());
+			response.setValues(invoiceline);
 		} else {
 
 			BigDecimal igst = BigDecimal.ZERO;
-			BigDecimal cgst = new BigDecimal("0.00");
-			BigDecimal sgst = new BigDecimal("0.00");
+			BigDecimal cgst = BigDecimal.ZERO;
+			BigDecimal sgst = BigDecimal.ZERO;
 			BigDecimal valueigst = invoiceline.getNetAmount();
 			gst = gst.add(invoiceline.getGstRate().multiply(valueigst));
 			igst = igst.add(gst);
@@ -73,10 +69,8 @@ public class Invoicelinecontroller extends JpaSupport {
 			invoiceline.setIGST(igst);
 			invoiceline.setCGST(cgst);
 			invoiceline.setSGST(sgst);
-			response.setValue("IGST", invoiceline.getIGST());
-			response.setValue("grossAmount", invoiceline.getGrossAmount());
-			response.setValue("CGST", invoiceline.getCGST());
-			response.setValue("SGST", invoiceline.getSGST());
+			response.setValues(invoiceline);
+			
 		}
 	}
 
@@ -85,7 +79,6 @@ public class Invoicelinecontroller extends JpaSupport {
 		Invoice invoice = request.getContext().asType(Invoice.class);
 		List<InvoiceLine> invoiceLines = invoice.getInvoiceItemsList();
 		BigDecimal cgst = null, sgst = null, igst = null, netamount = null, grossamount = null;
-		Integer qty = null;
 		for (InvoiceLine invoiceLine : invoiceLines) {
 			cgst = invoiceLine.getCGST().add(invoice.getNetCGST());
 			sgst = invoiceLine.getSGST().add(invoice.getNetSGST());
@@ -99,12 +92,8 @@ public class Invoicelinecontroller extends JpaSupport {
 		invoice.setNetIGST(igst);
 		invoice.setNetAmount(netamount);
 		invoice.setGrossAmount(grossamount);
-
-		response.setValue("netAmount", invoice.getNetAmount());
-		response.setValue("netSGST", invoice.getNetSGST());
-		response.setValue("netCGST", invoice.getNetCGST());
-		response.setValue("grossAmount", invoice.getGrossAmount());
-
+		response.setValues(invoice);
+	
 	}
 
 	public void setPartyContact(ActionRequest request, ActionResponse response) {
