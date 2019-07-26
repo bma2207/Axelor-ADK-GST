@@ -8,6 +8,7 @@
 	<grid name="product-grid" model="com.axelor.gst.db.Product" title="product-grid">
 		<toolbar>
 			<button name="invoice" title="Create invoice" onClick="action-product-gst" />
+				<button name="btPrint" title="Print" showTitle="false"  onClick="action-product-reports-list-On-click" icon="fa-print" />
 		</toolbar>
 		<field name="name" />
 		<field name="code" />
@@ -48,7 +49,7 @@
 		width="large">
 		<toolbar>
 			<button name="btnPrint" title="Print" showTitle="false"
-				showIf="id" onClick="action-TakeImagePath-On-click" icon="fa-print" />
+				showIf="id" onClick="action-product-report-On-click" icon="fa-print" />
 		</toolbar>
 		<panel title="Product Details" colSpan="12">
 			<panel colSpan="4">
@@ -83,18 +84,26 @@
 	</action-method>
 
 	
-	<action-report name="print.WithImage" design="product.rptdesign"
+	<action-report name="print.Image" design="product_report.rptdesign"
 		output="so-${date}${time}" format="pdf">
 		<param name="param" expr="eval:id" />
 		<param name="AttachmentPath" expr="eval:AttachmentPath" />
 	</action-report>
+	<action-report name="print.list.of.products" design="Products_grid_report.rptdesign"
+		output="so-${date}${time}" format="pdf">
+		<param name="param" expr="eval:_ids.toString()" />
+		<param name="AttachmentPath" expr="eval:AttachmentPath" />
+	</action-report>
 
-
-	<action-group name="action-TakeImagePath-On-click">
-		<action name="action-AttechMentPath" />
-		<action name="print.WithImage" />
+	<action-group name="action-product-report-On-click">
+		<action name="action-Path" />
+		<action name="print.Image" />
 	</action-group>
-	<action-method name="action-AttechMentPath">
+	<action-group name="action-product-reports-list-On-click">
+		<action name="action-Path" />
+		<action name="print.list.of.products" />
+	</action-group>
+	<action-method name="action-Path">
 		<call class="com.axelor.gst.controller.ReportImagePath" method="ImagePath" />
 	</action-method>
 </object-views>

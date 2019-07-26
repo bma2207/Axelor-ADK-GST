@@ -173,7 +173,7 @@
 
 	</action-group>
 	<action-method name="action-references">
-		<call class="com.axelor.gst.controller.SequenceCreate" method="setSequence" />
+		<call class="com.axelor.gst.controller.SequenceCreate" method="setSequences" />
 	</action-method>
 	<action-method name="action-invoiceListCalculation">
 		<call class="com.axelor.gst.controller.InvoiceListCalculation"

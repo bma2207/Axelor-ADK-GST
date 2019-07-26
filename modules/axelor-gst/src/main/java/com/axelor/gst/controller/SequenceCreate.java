@@ -55,6 +55,17 @@ public class SequenceCreate extends JpaSupport {
 	@Transactional
 	public void setSequence(ActionRequest request, ActionResponse response)
 	{
+		Sequence sequence=Beans.get(SequenceRepository.class).all().filter("self.model.name = ?1", "Party").fetchOne();
+		String reference= sequence.getNextNumber();
+		Party party=new Party();
+		party.setReference(reference);
+		response.setValue("reference", sequence.getNextNumber());	
+		sequence =service.sequenceIncrement(sequence);
+		Beans.get(SequenceRepository.class).save(sequence);
+	}
+	@Transactional
+	public void setSequences(ActionRequest request, ActionResponse response)
+	{
 		Sequence sequence=Beans.get(SequenceRepository.class).all().filter("self.model.name = ?1", "Invoice").fetchOne();
 		String reference= sequence.getNextNumber();
 		Party party=new Party();

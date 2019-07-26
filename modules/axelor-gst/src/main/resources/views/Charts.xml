@@ -2,12 +2,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.1.xsd">
 
-<chart name="chart.sales.by.customer" title="Sales by customer">
-<search-fields> 
-     <field type="datetime" name="fromDateTime" title="From Date"/>
-     <field type="datetime" name="toDateTime" title="To Date"/>
-  </search-fields>
-    <dataset type="jpql">
+	<chart name="chart.Unpaid.invoice.party" title="Unpaid invoices per customer"
+		onInit="action-invoice-unpaid">
+		<search-fields>
+			<field type="datetime" name="fromDateTime" title="From Date" />
+			<field type="datetime" name="toDateTime" title="To Date" />
+		</search-fields>
+		<dataset type="jpql">
     <![CDATA[
    SELECT
         SUM(self.grossAmount) AS amount,
@@ -18,16 +19,90 @@
     LEFT JOIN
         self.party AS _party
     WHERE
-         WHERE
+       
       YEAR(self.dateTime) = YEAR(current_date)
-      AND self.dateTime > :fromDateTime
-      AND self.dateTime < :toDateTime
+      AND 
+      self.status !='paid'
+   
     GROUP BY
         _party.name,
         MONTH(self.dateTime)
     ]]>
     </dataset>
-    <category key="month" type="month"/>
-    <series key="amount" groupBy="customer" type="bar"/>
-  </chart>
+		<category key="PartyName" />
+		<series key="amount" groupBy="customer" type="bar" />
+	</chart>
+
+	<chart name="chart.paid.invoice.party" title="Paid invoices per customer"
+		onInit="action-invoice-unpaid">
+		<search-fields>
+			<field type="datetime" name="fromDateTime" title="From Date" />
+			<field type="datetime" name="toDateTime" title="To Date" />
+		</search-fields>
+		<dataset type="sql">
+    <![CDATA[
+  select 
+  invoiceLine.item as item,
+  invoice.status,invoice.gross_amount as amount,
+  invoice.date_time from gst_invoice invoice 
+  inner join gst_invoice_line invoiceLine 
+  on invoice.id=invoiceLine.invoice_line 
+  where invoice.status ='paid'
+    ]]>
+    </dataset>
+		<category key="item" />
+		<series key="amount" groupBy="item" type="bar" />
+	</chart>
+
+	<chart name="chart.party.per.state" title="Customer per state">
+
+		<dataset type="sql">
+    <![CDATA[
+    select 
+    state.name as name,
+    count(party.name) as count from gst_address address
+    inner join gst_party party on party.id=address.party_address
+    inner join gst_state state on state.id=address.state 
+    GROUP BY state.name
+    ]]>
+    </dataset>
+		<category key="name" />
+		<series key="count" type="pie" />
+	</chart>
+
+	<chart name="chart.invoice.per.status.amount" title="Invoice per status amount ">
+
+		<dataset type="sql">
+    <![CDATA[
+     select 
+     Sum(gross_amount) as amount,
+     status from gst_invoice 
+     group by status
+    ]]>
+    </dataset>
+		<category key="status" />
+		<series key="amount" type="bar" />
+	</chart>
+	<chart name="chart.invoice.per.status.number.of.invoice" title="Per status number of invoices  ">
+
+		<dataset type="sql">
+    <![CDATA[
+     select 
+     count(status)as count,
+     status 
+     from gst_invoice 
+     group by status
+    ]]>
+    </dataset>
+		<category key="status" />
+		<series key="count" type="line" />
+	</chart>
+
+	<action-attrs name="action-invoice-unpaid">
+		<attribute name="value" expr="eval:__datetime__" for="toDateTime" />
+		<attribute name="value" expr="eval:__datetime__.withDayOfMonth(1)"
+			for="fromDateTime" />
+	</action-attrs>
+
+
 </object-views>

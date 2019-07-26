@@ -25,7 +25,7 @@
 		<decimal name="netSGST" />
 		<decimal name="netCGST" />
 		<decimal name="grossAmount" />
-		<one-to-many name="invoiceItemsList" ref="InvoiceLine" />
+		<one-to-many name="invoiceItemsList" ref="InvoiceLine" mappedBy="invoiceLine" />
 		
 	</entity>
 </domain-models>

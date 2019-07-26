@@ -88,7 +88,8 @@ public class PartySelection extends JpaSupport {
 		List<InvoiceLine> invoiceLines = invoice.getInvoiceItemsList();
 		BigDecimal cgst = null, sgst = null, igst = null, netamount = null, grossamount = null;
 		Integer qty = null;
-		
+
+		if (invoice.getInvoiceItemsList() != null) {
 
 		for (InvoiceLine invoiceLine : invoiceLines) {
 			cgst = invoiceLine.getCGST().add(invoice.getNetCGST());
@@ -108,6 +109,9 @@ public class PartySelection extends JpaSupport {
 		response.setValue("netSGST", invoice.getNetSGST());
 		response.setValue("netCGST", invoice.getNetCGST());
 		response.setValue("grossAmount", invoice.getGrossAmount());
+		}else {
+			System.out.println("hello");
+		}
 
 	}
 

@@ -574,10 +574,16 @@ party.name as partyName,
 invoiceLine.net_amount as invlineNetAmount, 
 invoiceLine.item  
 from gst_invoice invoice 
-inner join gst_invoice_invoice_items_list list 
-on list.gst_invoice=invoice.id 
-inner join gst_invoice_line invoiceLine on list.invoice_items_list=invoiceLine.id inner join gst_company company on company.id=invoice.company inner join gst_address address on address.id=company.address inner join gst_city city on city.id=address.city inner join gst_country country on country.id=address.country inner join gst_state state on state.id=address.state inner join meta_file file on file.id=company.image inner join gst_party party on party.id=invoice.party  
-where invoice.id=?;]]></xml-property>
+inner join gst_invoice_line invoiceLine on invoice.id=invoiceLine.invoice_line
+inner join gst_company company on company.id=invoice.company 
+inner join gst_address address on address.id=company.address                      
+inner join gst_city city on city.id=address.city 
+inner join gst_country country on country.id=address.country 
+inner join gst_state state on state.id=address.state 
+inner join meta_file file on file.id=company.image 
+inner join gst_party party on party.id=invoice.party  
+where invoice.id=?;
+]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
   <Version>2.0</Version>
@@ -1029,6 +1035,20 @@ where invoice.id=?;]]></xml-property>
     <body>
         <grid id="574">
             <property name="height">8.15625in</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Aggregation</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["Aggregation"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
             <column id="575"/>
             <column id="653"/>
             <column id="649"/>
@@ -1477,18 +1497,20 @@ where invoice.id=?;]]></xml-property>
             </row>
             <row id="586">
                 <cell id="587">
-                    <data id="670">
-                        <property name="fontSize">12pt</property>
-                        <property name="fontWeight">bold</property>
+                    <data id="791">
+                        <property name="dataSet">Invoice</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">totalgross</property>
+                                <text-property name="displayName">totalgross</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["totalgross"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                        </list-property>
                         <property name="resultSetColumn">totalgross</property>
                     </data>
                 </cell>
-                <cell id="652">
-                    <label id="663">
-                        <property name="fontWeight">bold</property>
-                        <text-property name="text">Qty</text-property>
-                    </label>
-                </cell>
+                <cell id="652"/>
                 <cell id="648">
                     <label id="664">
                         <property name="fontWeight">bold</property>
