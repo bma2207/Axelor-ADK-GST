@@ -2,7 +2,6 @@ package com.axelor.gst.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.axelor.db.JpaSupport;
 import com.axelor.gst.db.Invoice;
 import com.axelor.gst.db.InvoiceLine;
@@ -14,9 +13,10 @@ import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import com.google.inject.Inject;
 
-public class ProductIds extends JpaSupport{
+public class ProductController extends JpaSupport {
 	@Inject
 	private ProductServiceIMP service;
+
 	public void openPrintWizard(ActionRequest request, ActionResponse response) {
 		Product product = request.getContext().asType(Product.class);
 

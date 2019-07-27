@@ -56,9 +56,9 @@
 	<action name="gst-product-category-itemPrice"/>
 	</action-group>
 	<action-method name="action-calculation-price">
-	<call class="com.axelor.gst.controller.Invoicelinecontroller" method="calnetamount"/>
+	<call class="com.axelor.gst.controller.InvoiceController" method="CalculateNetAmount"/>
 	</action-method>
 	<action-method name="action-calculation-qty">
-	<call class="com.axelor.gst.controller.Invoicelinecontroller" method="calnetamount"/>
+	<call class="com.axelor.gst.controller.InvoiceController" method="CalculateNetAmount"/>
 	</action-method>
 </object-views>

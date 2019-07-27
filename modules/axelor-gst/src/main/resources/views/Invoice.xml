@@ -85,7 +85,7 @@
 				onChange="action-group-invoiceLitCalculation" />
 			<field name="shippingAddress" title="Shipping Address" domain="self.partyAddress =:party" />
 			<field name="inUseInvoiceAddressAsShipping" title="Use Invoice Address As Shipping"
-				onChange="com.axelor.gst.controller.Invoicelinecontroller:setShippingAddress" />
+				onChange="com.axelor.gst.controller.InvoiceController:setShippingAddress" />
 		</panel>
 
 		<panel title="Invoice Calculation" colSpan="12">
@@ -147,7 +147,7 @@
 	</action-attrs>
 
 	<action-method name="action-calculation">
-		<call class="com.axelor.gst.controller.Invoicelinecontroller"
+		<call class="com.axelor.gst.controller.InvoiceController"
 			method="onCalculation" />
 	</action-method>
 
@@ -167,7 +167,7 @@
 	</action-method>
 
 	<action-method name="action-gst-product">
-		<call class="com.axelor.gst.controller.ProductIds" method="productIdsList" />
+		<call class="com.axelor.gst.controller.ProductController" method="productIdsList" />
 	</action-method>
 
 	<action-group name="action-gst-product-ids">
@@ -176,15 +176,15 @@
 	</action-group>
 
 	<action-method name="action-references">
-		<call class="com.axelor.gst.controller.SequenceCreate" method="setSequences" />
+		<call class="com.axelor.gst.controller.SequenceController" method="setSequences" />
 	</action-method>
 	<action-method name="action-invoiceListCalculation">
-		<call class="com.axelor.gst.controller.InvoiceListCalculation"
+		<call class="com.axelor.gst.controller.InvoiceController"
 			method="CalculateinvoiceList" />
 	</action-method>
 	<action-method name="action-calculation-price">
 		<call class="com.axelor.gst.controller.Invoicelinecontroller"
-			method="calnetamount" />
+			method="CalculateNetAmount" />
 	</action-method>
 	<action-group name="action-group-invoiceLitCalculation">
 		<action name="action-invoiceListCalculation" />
@@ -192,14 +192,14 @@
 	</action-group>
 	
 	<action-method name="action-prty-address-set">
-		<call class="com.axelor.gst.controller.Invoicelinecontroller"
+		<call class="com.axelor.gst.controller.InvoiceController"
 			method="setPartyContact" />
 	</action-method>
 	<action-method name="action-prty-address-check">
-		<call class="com.axelor.gst.controller.PartySelection" method="CalculateinvoiceList" />
+		<call class="com.axelor.gst.controller.InvoiceController" method="CalculateinvoiceList" />
 	</action-method>
 	<action-method name="action-party-invoice-calculaion">
-		<call class="com.axelor.gst.controller.PartySelection" method="onCalculation" />
+		<call class="com.axelor.gst.controller.InvoiceController" method="onCalculation" />
 	</action-method>
 	<action-group name="action-group-of-set-check-party-address">
 		<action name="action-prty-address-check" />

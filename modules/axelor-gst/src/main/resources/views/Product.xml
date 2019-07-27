@@ -79,7 +79,7 @@
 		<field name="gstRate" expr="eval:product.gstRate" />
 	</action-record>
 	<action-method name="action-product-gst">
-		<call class="com.axelor.gst.controller.ProductIds"
+		<call class="com.axelor.gst.controller.ProductController"
 			method="openPrintWizard" />
 	</action-method>
 

@@ -1,32 +1,69 @@
 package com.axelor.gst.controller;
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-
 import com.axelor.db.JpaSupport;
 import com.axelor.gst.db.Address;
 import com.axelor.gst.db.Contact;
 import com.axelor.gst.db.Invoice;
 import com.axelor.gst.db.InvoiceLine;
 import com.axelor.gst.db.Party;
-import com.axelor.gst.db.Product;
-import com.axelor.gst.db.repo.ProductRepo;
-import com.axelor.gst.services.ProductServiceIMP;
-import com.axelor.i18n.I18n;
-import com.axelor.meta.schema.actions.ActionValidate.Alert;
-import com.axelor.meta.schema.actions.ActionView;
+import com.axelor.gst.services.InvoiceServiceImp;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import com.google.inject.Inject;
 
-public class Invoicelinecontroller extends JpaSupport {
+public class InvoiceController extends JpaSupport {
+	@Inject
+	private InvoiceServiceImp service;
 
-	public void calnetamount(ActionRequest request, ActionResponse response) {
+	public void CalculateinvoiceList(ActionRequest request, ActionResponse response) {
+		Invoice invoice = request.getContext().asType(Invoice.class);
+		List<InvoiceLine> invoiceList = (List<InvoiceLine>) service.invoiceList(invoice);
+		response.setValues(invoice);
+	}
 
+	public void onCalculation(ActionRequest request, ActionResponse response) {
+		Invoice invoice = request.getContext().asType(Invoice.class);
+		invoice = service.invoiceCalculation(invoice);
+		response.setValues(invoice);
+	}
+	
+	public void calculateInvoice(ActionRequest request, ActionResponse response)
+	{
+		Invoice invoice = request.getContext().asType(Invoice.class);
+		invoice = service.invoiceCalculation(invoice);
+		response.setValues(invoice);
+	}
+	
+/*	public void setAddressContact(ActionRequest request, ActionResponse response)
+	{
+		Invoice invoice = request.getContext().asType(Invoice.class);
+		boolean inshipp = (boolean) request.getContext().get("inUseInvoiceAddressAsShipping");
+		response.setValue("partyContact",
+		invoice.getParty().getContactList().stream().filter(a -> a.getType().equals("primary")).findAny());
+
+		response.setValue("invoiceAddress",
+		invoice.getParty().getAddressList().stream().filter(b -> b.getType().equals("invoice")).findAny());
+
+		if (inshipp) {
+		response.setValue("shippingAddress",
+		invoice.getParty().getAddressList().stream().filter(b -> b.getType().equals("invoice")).findAny());
+		} else {
+		response.setValue("shippingAddress",
+		invoice.getParty().getAddressList().stream().filter(b -> b.getType().equals("shipping")).findAny());
+		}
+	}*/
+	
+	public void CalculateNetAmount(ActionRequest request, ActionResponse response)
+	{
 		InvoiceLine invoiceline = request.getContext().asType(InvoiceLine.class);
 		Invoice invoice = request.getContext().getParent().asType(Invoice.class);
 		BigDecimal netamount = BigDecimal.ZERO;
+		BigDecimal gst = BigDecimal.ZERO;
+		BigDecimal sgst = BigDecimal.ZERO;
+		BigDecimal cgst = BigDecimal.ZERO;
+		BigDecimal igst = BigDecimal.ZERO;
+		BigDecimal valueigst = invoiceline.getNetAmount();
 		BigDecimal value = invoiceline.getPrice().multiply(new BigDecimal(invoiceline.getQty()));
 
 		netamount = netamount.add(value);
@@ -37,14 +74,10 @@ public class Invoicelinecontroller extends JpaSupport {
 		Address companyAddress = invoice.getCompany().getAddress();
 		Address invoiceAddress = invoice.getInvoiceAddress();
 
-		BigDecimal gst = BigDecimal.ZERO;
-
+		
 		if (companyAddress.getState().equals(invoiceAddress.getState())) {
 			BigDecimal grossValues = BigDecimal.ZERO;
-			BigDecimal sgst = BigDecimal.ZERO;
-			BigDecimal cgst = BigDecimal.ZERO;
-			BigDecimal igst = BigDecimal.ZERO;
-			BigDecimal valueigst = invoiceline.getNetAmount();
+			
 			gst = gst.add(invoiceline.getGstRate().multiply(valueigst));
 			BigDecimal dividevalue = gst.divide(new BigDecimal(2));
 			sgst = sgst.add(dividevalue);
@@ -58,10 +91,6 @@ public class Invoicelinecontroller extends JpaSupport {
 			response.setValues(invoiceline);
 		} else {
 
-			BigDecimal igst = BigDecimal.ZERO;
-			BigDecimal cgst = BigDecimal.ZERO;
-			BigDecimal sgst = BigDecimal.ZERO;
-			BigDecimal valueigst = invoiceline.getNetAmount();
 			gst = gst.add(invoiceline.getGstRate().multiply(valueigst));
 			igst = igst.add(gst);
 			value = valueigst.add(igst);
@@ -73,29 +102,7 @@ public class Invoicelinecontroller extends JpaSupport {
 			
 		}
 	}
-
-	public void onCalculation(ActionRequest request, ActionResponse response) {
-
-		Invoice invoice = request.getContext().asType(Invoice.class);
-		List<InvoiceLine> invoiceLines = invoice.getInvoiceItemsList();
-		BigDecimal cgst = null, sgst = null, igst = null, netamount = null, grossamount = null;
-		for (InvoiceLine invoiceLine : invoiceLines) {
-			cgst = invoiceLine.getCGST().add(invoice.getNetCGST());
-			sgst = invoiceLine.getSGST().add(invoice.getNetSGST());
-			igst = invoiceLine.getIGST().add(invoice.getNetIGST());
-			netamount = invoiceLine.getNetAmount().add(invoice.getNetAmount());
-			grossamount = invoiceLine.getGrossAmount().add(invoice.getNetCGST());
-
-		}
-		invoice.setNetCGST(cgst);
-		invoice.setNetSGST(sgst);
-		invoice.setNetIGST(igst);
-		invoice.setNetAmount(netamount);
-		invoice.setGrossAmount(grossamount);
-		response.setValues(invoice);
 	
-	}
-
 	public void setPartyContact(ActionRequest request, ActionResponse response) {
 		boolean inInvoiceAddShippingAdd = (boolean) request.getContext().get("inUseInvoiceAddressAsShipping");
 		Invoice invoice = request.getContext().asType(Invoice.class);
@@ -167,4 +174,5 @@ public class Invoicelinecontroller extends JpaSupport {
 		}
 	}
 
+	
 }
