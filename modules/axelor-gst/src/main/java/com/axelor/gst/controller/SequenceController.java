@@ -20,15 +20,10 @@ public class SequenceController extends JpaSupport{
 		Sequence seq=request.getContext().asType(Sequence.class);
 		String prefix=seq.getPrefix();
 		String ssuffix=seq.getSuffix();
-		
 		int number=seq.getPadding();
-		
-		
 		String num="00";
 		int num1 = Integer.parseInt(num) + 1;
-		
 		int len = number - (num1 + "").length();
-		System.out.println("demo :" +len);
 		String temp = "" + num1;
 		
 		for(int i = 0; i < len; i ++) {
@@ -65,6 +60,7 @@ public class SequenceController extends JpaSupport{
 			
 		}
 	}
+	
 	@Transactional
 	public void setSequences(ActionRequest request, ActionResponse response)
 	{

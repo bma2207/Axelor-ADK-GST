@@ -35,25 +35,7 @@ public class InvoiceController extends JpaSupport {
 		response.setValues(invoice);
 	}
 	
-/*	public void setAddressContact(ActionRequest request, ActionResponse response)
-	{
-		Invoice invoice = request.getContext().asType(Invoice.class);
-		boolean inshipp = (boolean) request.getContext().get("inUseInvoiceAddressAsShipping");
-		response.setValue("partyContact",
-		invoice.getParty().getContactList().stream().filter(a -> a.getType().equals("primary")).findAny());
 
-		response.setValue("invoiceAddress",
-		invoice.getParty().getAddressList().stream().filter(b -> b.getType().equals("invoice")).findAny());
-
-		if (inshipp) {
-		response.setValue("shippingAddress",
-		invoice.getParty().getAddressList().stream().filter(b -> b.getType().equals("invoice")).findAny());
-		} else {
-		response.setValue("shippingAddress",
-		invoice.getParty().getAddressList().stream().filter(b -> b.getType().equals("shipping")).findAny());
-		}
-	}*/
-	
 	public void CalculateNetAmount(ActionRequest request, ActionResponse response)
 	{
 		InvoiceLine invoiceline = request.getContext().asType(InvoiceLine.class);

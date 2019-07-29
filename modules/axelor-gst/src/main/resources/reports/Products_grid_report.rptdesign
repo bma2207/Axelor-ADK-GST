@@ -333,6 +333,8 @@ where product.id=any(String_to_array(replace(replace(?,'[',''),']',''),',') :: i
     </page-setup>
     <body>
         <table id="108">
+            <property name="pageBreakAfter">auto</property>
+            <property name="pageBreakInside">avoid</property>
             <property name="dataSet">Product</property>
             <list-property name="boundDataColumns">
                 <structure>
@@ -372,6 +374,7 @@ where product.id=any(String_to_array(replace(replace(?,'[',''),']',''),',') :: i
                     <property name="dataType">string</property>
                 </structure>
             </list-property>
+            <property name="pageBreakInterval">10</property>
             <column id="149"/>
             <column id="150"/>
             <column id="151"/>
@@ -443,6 +446,8 @@ where product.id=any(String_to_array(replace(replace(?,'[',''),']',''),',') :: i
                     <cell id="133"/>
                 </row>
                 <row id="134">
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">medium</property>
                     <cell id="135">
                         <label id="156">
                             <property name="fontWeight">bold</property>
