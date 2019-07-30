@@ -69,14 +69,14 @@
 		</toolbar>
 
 		<panel title="Create Invoice" colSpan="12">
-			<field name="reference" title="Reference" colSpan="4" />
+			<field name="reference" title="Reference" colSpan="4" readonly="true" />
 			<field name="status" widget="nav-select" readonly="true"
 				colSpan="8" />
 		</panel>
 
 		<panel title="Party Details" colSpan="12">
 			<field name="party" title="Party Name"
-				onChange="action-group-of-set-check-party-address" />
+			onSelect="action-group-of-set-check-party-address" required="true"/>
 			<field name="partyContact" title="Party Contact" domain="self.party =:party" />
 		</panel>
 
@@ -101,7 +101,7 @@
 			<field name="invoiceItemsList" colSpan="12" onChange="action-calculation" />
 		</panel>
 
-		<panel sidebar="true">
+		<panel sidebar="true" hideIf="$readonly()">
 			<button name="Validated" title="Validated" onClick="action-validation"
 				hidden="true" showIf="status == 'draft'" />
 			<button name="Canceled" title="Canceled" onClick="action-Canceled"

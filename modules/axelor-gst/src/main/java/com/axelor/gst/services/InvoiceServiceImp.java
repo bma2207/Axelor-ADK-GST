@@ -3,13 +3,12 @@ package com.axelor.gst.services;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.axelor.gst.db.Address;
 import com.axelor.gst.db.Invoice;
 import com.axelor.gst.db.InvoiceLine;
 import com.axelor.gst.db.Party;
 
-public class InvoiceServiceImp implements InvoiceService{
+public class InvoiceServiceImp implements InvoiceService {
 	@Override
 	public List<InvoiceLine> invoiceList(Invoice invoice) {
 		List<InvoiceLine> invoiceList = invoice.getInvoiceItemsList();
@@ -17,12 +16,12 @@ public class InvoiceServiceImp implements InvoiceService{
 		Party party = invoice.getParty();
 		Address invoiceaddress = null;
 		List<Address> addresslist = party.getAddressList();
-		
+
 		for (Address a : addresslist) {
 			if (a.getType().equals("invoice")) {
 				invoiceaddress = a;
 				invoice.setInvoiceAddress(invoiceaddress);
-			
+
 				if (invoice.getInvoiceItemsList() != null) {
 
 					for (InvoiceLine invoiceline : invoiceList) {
@@ -42,7 +41,7 @@ public class InvoiceServiceImp implements InvoiceService{
 						BigDecimal igst = BigDecimal.ZERO;
 						BigDecimal valueigst = invoiceline.getNetAmount();
 						if (companyAddress.getState().equals(invoiceAddress.getState())) {
-							gst = gst.add(invoiceline.getGstRate().multiply(valueigst));
+							gst = gst.add(invoiceline.getGstRate().multiply(netamount));
 							BigDecimal dividevalue = gst.divide(new BigDecimal(2));
 							sgst = sgst.add(dividevalue);
 							cgst = sgst;
@@ -52,7 +51,7 @@ public class InvoiceServiceImp implements InvoiceService{
 							valueigst = valueigst.add(cgst);
 							grossValues = cgst.add(valueigst);
 							invoiceline.setGrossAmount(grossValues);
-							
+
 						} else {
 
 							gst = gst.add(invoiceline.getGstRate().multiply(valueigst));
@@ -77,8 +76,7 @@ public class InvoiceServiceImp implements InvoiceService{
 	public Invoice invoiceCalculation(Invoice invoice) {
 		List<InvoiceLine> invoiceLines = invoice.getInvoiceItemsList();
 		BigDecimal cgst = null, sgst = null, igst = null, netamount = null, grossamount = null;
-		
-
+	
 		if (invoice.getInvoiceItemsList() != null) {
 
 			for (InvoiceLine invoiceLine : invoiceLines) {
@@ -86,45 +84,82 @@ public class InvoiceServiceImp implements InvoiceService{
 				sgst = invoiceLine.getSGST().add(invoice.getNetSGST());
 				igst = invoiceLine.getIGST().add(invoice.getNetIGST());
 				netamount = invoiceLine.getNetAmount().add(invoice.getNetAmount());
-				grossamount = invoiceLine.getGrossAmount().add(invoice.getNetCGST());
-
+				invoice.setNetCGST(cgst);
+				grossamount = invoiceLine.getGrossAmount().add(invoice.getNetAmount());
+				invoice.setNetSGST(sgst);
+				invoice.setNetIGST(igst);
+				invoice.setNetAmount(netamount);
+				invoice.setGrossAmount(grossamount);
 			}
-			invoice.setNetCGST(cgst);
-			invoice.setNetSGST(sgst);
-			invoice.setNetIGST(igst);
-			invoice.setNetAmount(netamount);
-			invoice.setGrossAmount(grossamount);
-			
-			
+	
 		} else {
-			System.out.println("hello");
+		
 		}
 
-		return  invoice;
+		return invoice;
 	}
 
 	public Invoice calculation(Invoice invoice) {
 		List<InvoiceLine> invoiceLines = invoice.getInvoiceItemsList();
 		BigDecimal cgst = null, sgst = null, igst = null, netamount = null, grossamount = null;
-			for (InvoiceLine invoiceLine : invoiceLines) {
-				cgst = invoiceLine.getCGST().add(invoice.getNetCGST());
-				sgst = invoiceLine.getSGST().add(invoice.getNetSGST());
-				igst = invoiceLine.getIGST().add(invoice.getNetIGST());
-				netamount = invoiceLine.getNetAmount().add(invoice.getNetAmount());
-				grossamount = invoiceLine.getGrossAmount().add(invoice.getNetCGST());
+		for (InvoiceLine invoiceLine : invoiceLines) {
+			cgst = invoiceLine.getCGST().add(invoice.getNetCGST());
+			sgst = invoiceLine.getSGST().add(invoice.getNetSGST());
+			igst = invoiceLine.getIGST().add(invoice.getNetIGST());
+			netamount = invoiceLine.getNetAmount().add(invoice.getNetAmount());
+			grossamount = invoiceLine.getGrossAmount().add(invoice.getNetCGST());
 
-			}
-			invoice.setNetCGST(cgst);
-			invoice.setNetSGST(sgst);
-			invoice.setNetIGST(igst);
-			invoice.setNetAmount(netamount);
-			invoice.setGrossAmount(grossamount);
-			return  invoice;
+		}
+		invoice.setNetCGST(cgst);
+		invoice.setNetSGST(sgst);
+		invoice.setNetIGST(igst);
+		invoice.setNetAmount(netamount);
+		invoice.setGrossAmount(grossamount);
+		return invoice;
 	}
+
 	@Override
-	public InvoiceLine invoiceLineCalculation(Invoice invoice) {
-		// TODO Auto-generated method stub
-		return null;
+	public InvoiceLine Calculation(InvoiceLine invoiceline, Invoice invoice) {
+
+		BigDecimal netamount = BigDecimal.ZERO;
+		BigDecimal gst = BigDecimal.ZERO;
+		BigDecimal sgst = BigDecimal.ZERO;
+		BigDecimal cgst = BigDecimal.ZERO;
+		BigDecimal igst = BigDecimal.ZERO;
+		BigDecimal valueigst = invoiceline.getNetAmount();
+		BigDecimal value = invoiceline.getPrice().multiply(new BigDecimal(invoiceline.getQty()));
+
+		netamount = netamount.add(value);
+		invoiceline.setNetAmount(netamount);
+
+		Address companyAddress = invoice.getCompany().getAddress();
+		Address invoiceAddress = invoice.getInvoiceAddress();
+
+		if (companyAddress.getState().equals(invoiceAddress.getState())) {
+			BigDecimal grossValues = BigDecimal.ZERO;
+
+			gst = gst.add(invoiceline.getGstRate().multiply(netamount));
+			BigDecimal dividevalue = gst.divide(new BigDecimal(2));
+			sgst = sgst.add(dividevalue);
+			cgst = sgst;
+			invoiceline.setCGST(cgst);
+			invoiceline.setSGST(sgst);
+			invoiceline.setIGST(igst);
+			valueigst = valueigst.add(cgst);
+			grossValues = cgst.add(valueigst);
+			invoiceline.setGrossAmount(grossValues);
+
+		} else {
+
+			gst = gst.add(invoiceline.getGstRate().multiply(netamount));
+			igst = igst.add(gst);
+			value = valueigst.add(igst);
+			invoiceline.setGrossAmount(value);
+			invoiceline.setIGST(igst);
+			invoiceline.setCGST(cgst);
+			invoiceline.setSGST(sgst);
+		}
+		return invoiceline;
 	}
 
 }

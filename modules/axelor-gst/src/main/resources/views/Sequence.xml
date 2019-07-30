@@ -32,7 +32,7 @@
 		</panel>
 	</form>
 	<action-method name="action-generateSequence">
-	<call class="com.axelor.gst.controller.SequenceCreate" method="generateSequence"/>
+	<call class="com.axelor.gst.controller.SequenceController" method="generateSequence"/>
 	
 	</action-method>
 

@@ -85,7 +85,7 @@
 		
 		
 	</form>
-<action-method name="action-references">
+<action-method name="action-references_no">
 <call class="com.axelor.gst.controller.SequenceController" method="setSequence"/>
 </action-method>
 </object-views>

@@ -7,7 +7,7 @@
 
 	<grid name="product-grid" model="com.axelor.gst.db.Product" title="product-grid">
 		<toolbar>
-			<button name="invoice" title="Create invoice" onClick="action-product-gst" />
+			<button name="invoice" title="Create invoice" onClick="action.product.list" />
 				<button name="btPrint" title="Print" showTitle="false"  onClick="action-product-reports-list-On-click" icon="fa-print" />
 		</toolbar>
 		<field name="name" />
@@ -106,4 +106,9 @@
 	<action-method name="action-Path">
 		<call class="com.axelor.gst.controller.ReportImagePath" method="ImagePath" />
 	</action-method>
+	
+	<action-view name="action.product.list" title="ProductList" model="com.axelor.gst.db.Invoice">
+	<view type="form" name="invoice-form"/>
+	<context name="productIds" expr="eval:_ids"/>
+	</action-view>
 </object-views>

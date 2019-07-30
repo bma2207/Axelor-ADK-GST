@@ -19,7 +19,7 @@ public class SequenceController extends JpaSupport{
 	{
 		Sequence seq=request.getContext().asType(Sequence.class);
 		String prefix=seq.getPrefix();
-		String ssuffix=seq.getSuffix();
+		String suffix=seq.getSuffix();
 		int number=seq.getPadding();
 		String num="00";
 		int num1 = Integer.parseInt(num) + 1;
@@ -29,18 +29,10 @@ public class SequenceController extends JpaSupport{
 		for(int i = 0; i < len; i ++) {
 			temp = "0" + temp;
 		}
-		seq.setNextNumber(prefix +""+temp + ""+ ssuffix);
+		seq.setNextNumber(prefix +""+temp + ""+ suffix);
 		response.setValue("nextNumber", seq.getNextNumber());	
 	
 	}
-	public void incrementNo(ActionRequest request, ActionResponse response)
-	{
-		Sequence seqs=Beans.get(SequenceRepository.class).find((Long) request.getContext().get("id"));
-		seqs =service.sequenceIncrement(seqs);
-		response.setValue("nextNumber", seqs.getNextNumber());
-		
-	}
-	
 	@Transactional
 	public void setSequence(ActionRequest request, ActionResponse response)
 	{ 
@@ -49,8 +41,7 @@ public class SequenceController extends JpaSupport{
 		if(partys.getReference() == null) {
 		Sequence sequence=Beans.get(SequenceRepository.class).all().filter("self.model.name = ?1", "Party").fetchOne();
 		String reference= sequence.getNextNumber();
-		Party party=new Party();
-		party.setReference(reference);
+		partys.setReference(reference);
 		response.setValue("reference", sequence.getNextNumber());	
 		sequence =service.sequenceIncrement(sequence);
 		Beans.get(SequenceRepository.class).save(sequence);
@@ -60,16 +51,15 @@ public class SequenceController extends JpaSupport{
 			
 		}
 	}
-	
 	@Transactional
 	public void setSequences(ActionRequest request, ActionResponse response)
 	{
 		Invoice invoice = request.getContext().asType(Invoice.class);
-		if(invoice.getReference() == null) {
+		if(invoice.getReference() == null && invoice.getStatus() == "validated") {
+			
 		Sequence sequence=Beans.get(SequenceRepository.class).all().filter("self.model.name = ?1", "Invoice").fetchOne();
 		String reference= sequence.getNextNumber();
-		Party party=new Party();
-		party.setReference(reference);
+		invoice.setReference(reference);
 		response.setValue("reference", sequence.getNextNumber());	
 		sequence =service.sequenceIncrement(sequence);
 		Beans.get(SequenceRepository.class).save(sequence);

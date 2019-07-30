@@ -322,11 +322,24 @@ where product.id=?]]></xml-property>
     </page-setup>
     <body>
         <grid id="7">
-            <column id="8"/>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">medium</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">medium</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">medium</property>
+            <property name="width">7.947916666666667in</property>
+            <column id="8">
+                <property name="width">1.9375in</property>
+            </column>
             <column id="9"/>
-            <column id="10"/>
+            <column id="10">
+                <property name="width">2.6458333333333335in</property>
+            </column>
             <row id="11">
                 <cell id="12">
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">medium</property>
                     <table id="57">
                         <property name="dataSet">Product</property>
                         <list-property name="boundDataColumns">
@@ -377,7 +390,16 @@ where product.id=?]]></xml-property>
                             <row id="60">
                                 <cell id="61">
                                     <image id="67">
-                                        <property name="width">2.4583333333333335in</property>
+                                        <property name="borderBottomStyle">dashed</property>
+                                        <property name="borderBottomWidth">medium</property>
+                                        <property name="borderLeftStyle">dashed</property>
+                                        <property name="borderLeftWidth">medium</property>
+                                        <property name="borderRightStyle">dashed</property>
+                                        <property name="borderRightWidth">medium</property>
+                                        <property name="borderTopStyle">dashed</property>
+                                        <property name="borderTopWidth">medium</property>
+                                        <property name="height">1.25in</property>
+                                        <property name="width">1.3645833333333333in</property>
                                         <property name="source">file</property>
                                         <expression name="uri" type="javascript">params["AttachmentPath"].value+row["file_path"]</expression>
                                     </image>
@@ -391,11 +413,9 @@ where product.id=?]]></xml-property>
                         </footer>
                     </table>
                 </cell>
-                <cell id="13"/>
-                <cell id="14"/>
-            </row>
-            <row id="15">
-                <cell id="16">
+                <cell id="13">
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">medium</property>
                     <label id="43"/>
                     <label id="46">
                         <text-property name="text">Code:</text-property>
@@ -410,7 +430,9 @@ where product.id=?]]></xml-property>
                         <text-property name="text">Sale Price</text-property>
                     </label>
                 </cell>
-                <cell id="17">
+                <cell id="14">
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">medium</property>
                     <table id="23">
                         <property name="dataSet">Product</property>
                         <list-property name="boundDataColumns">
@@ -488,11 +510,15 @@ where product.id=?]]></xml-property>
                             </row>
                             <row id="50">
                                 <cell id="51">
+                                    <property name="borderBottomStyle">solid</property>
+                                    <property name="borderBottomWidth">medium</property>
                                     <data id="53">
                                         <property name="resultSetColumn">sale_price</property>
                                     </data>
                                 </cell>
                                 <cell id="52">
+                                    <property name="borderBottomStyle">solid</property>
+                                    <property name="borderBottomWidth">medium</property>
                                     <data id="54">
                                         <property name="resultSetColumn">cost_price</property>
                                     </data>
@@ -505,12 +531,6 @@ where product.id=?]]></xml-property>
                         </footer>
                     </table>
                 </cell>
-                <cell id="18"/>
-            </row>
-            <row id="19">
-                <cell id="20"/>
-                <cell id="21"/>
-                <cell id="22"/>
             </row>
         </grid>
     </body>

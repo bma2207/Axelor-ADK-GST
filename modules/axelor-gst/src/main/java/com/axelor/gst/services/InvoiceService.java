@@ -9,5 +9,5 @@ public interface InvoiceService {
  
 	public List<InvoiceLine> invoiceList(Invoice invoice);
 	public Invoice invoiceCalculation(Invoice invoice);
-	public InvoiceLine invoiceLineCalculation(Invoice invoice);
+	public InvoiceLine Calculation(InvoiceLine invoiceline,Invoice invoice);
 }
