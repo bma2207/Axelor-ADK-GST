@@ -3,14 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
   http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
-
+  
 	<selection name="invoiceStatus">
 		<option value="draft">DRAFT</option>
 		<option value="validated">VALIDATED</option>
 		<option value="paid">PAID</option>
 		<option value="canceled">CANCELED</option>
 	</selection>
-
 
 	<grid name="invoice-grid" model="com.axelor.gst.db.Invoice" title="invoice-grid">
 		<field name="status" widget="nav-select" selection="invoiceStatus"
@@ -31,8 +30,9 @@
 		<field name="grossAmount" />
 		<field name="invoiceItemsList" />
 	</grid>
+	
 	<kanban name="incoice-kanban" title="invoice" model="com.axelor.gst.db.Invoice"
-		columnBy="status" sequenceBy="priority" limit="10">
+		columnBy="status" sequenceBy="priority" limit="10" draggable="true" onMove="action.checkStatus">
 		<field name="party" />
 		<field name="status" widget="nav-select" readonly="true"
 			colSpan="8" />
@@ -76,7 +76,7 @@
 
 		<panel title="Party Details" colSpan="12">
 			<field name="party" title="Party Name"
-			onSelect="action-group-of-set-check-party-address" required="true"/>
+			onChange="action-group-of-set-check-party-address" required="true"/>
 			<field name="partyContact" title="Party Contact" domain="self.party =:party" />
 		</panel>
 
@@ -102,13 +102,13 @@
 		</panel>
 
 		<panel sidebar="true" hideIf="$readonly()">
-			<button name="Validated" title="Validated" onClick="action-validation"
-				hidden="true" showIf="status == 'draft'" />
-			<button name="Canceled" title="Canceled" onClick="action-Canceled"
+			<button name="Validated" title="Validated" onClick="action-validation,save"
+				hidden="true" showIf="status == 'draft'"  />
+			<button name="Canceled" title="Canceled" onClick="action-Canceled,save"
 				hidden="true" hideIf="status == 'paid' || status =='canceled' " />
-			<button name="paid" title="Paid" onClick="action-paid" hidden="true"
+			<button name="paid" title="Paid" onClick="action-paid,save" hidden="true"
 				showIf="status == 'validated' " />
-			<button name="draft" title="Draft" onClick="action-draft"
+			<button name="draft" title="Draft" onClick="action-draft,save"
 				hidden="true" showIf="status == 'validated' " />
 		</panel>
 
@@ -206,5 +206,9 @@
 		<action name="action-prty-address-set" />
 		<action name="action-party-invoice-calculaion" />
 	</action-group>
+	<action-method name="action.checkStatus">
+	<call class="com.axelor.gst.controller.InvoiceController" method="checkStatus"/>
+	</action-method>
+
 
 </object-views>

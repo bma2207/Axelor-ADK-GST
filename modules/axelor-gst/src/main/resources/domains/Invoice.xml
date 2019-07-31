@@ -5,12 +5,8 @@
   http://axelor.com/xml/ns/domain-models/domain-models_5.0.xsd">
 
 	<module package="com.axelor.gst.db" name="gst" />
-
-	
-
 	<entity name="Invoice">
-		
-		<string name="status" selection="invoiceStatus" default="draft"/>
+		<string name="status" selection="invoiceStatus" default="draft" />
 		<many-to-one name="company" ref="Company" />
 		<string name="reference" />
 		<datetime name="dateTime" />
@@ -25,7 +21,7 @@
 		<decimal name="netSGST" />
 		<decimal name="netCGST" />
 		<decimal name="grossAmount" />
-		<one-to-many name="invoiceItemsList" ref="InvoiceLine" mappedBy="invoiceLine" />
-		
+		<one-to-many name="invoiceItemsList" ref="InvoiceLine"
+			mappedBy="invoiceLine" />
 	</entity>
 </domain-models>

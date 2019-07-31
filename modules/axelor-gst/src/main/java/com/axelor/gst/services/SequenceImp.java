@@ -33,4 +33,22 @@ public class SequenceImp implements SequenceService {
 		seqs.setNextNumber(newVersion + "" + val + "" + ssuffix);
 		return seqs;
 	}
+
+	@Override
+	public Sequence generateSequence(Sequence sequence) {
+		String prefix = sequence.getPrefix();
+		String suffix = sequence.getSuffix();
+		int number = sequence.getPadding();
+		String num = "00";
+		int num1 = Integer.parseInt(num) + 1;
+		int len = number - (num1 + "").length();
+		String temp = "" + num1;
+
+		for (int i = 0; i < len; i++) {
+			temp = "0" + temp;
+		}
+		sequence.setNextNumber(prefix + "" + temp + "" + suffix);
+
+		return sequence;
+	}
 }

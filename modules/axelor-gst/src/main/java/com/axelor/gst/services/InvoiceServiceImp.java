@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import com.axelor.gst.db.Address;
+import com.axelor.gst.db.Contact;
 import com.axelor.gst.db.Invoice;
 import com.axelor.gst.db.InvoiceLine;
 import com.axelor.gst.db.Party;
@@ -76,7 +77,7 @@ public class InvoiceServiceImp implements InvoiceService {
 	public Invoice invoiceCalculation(Invoice invoice) {
 		List<InvoiceLine> invoiceLines = invoice.getInvoiceItemsList();
 		BigDecimal cgst = null, sgst = null, igst = null, netamount = null, grossamount = null;
-	
+
 		if (invoice.getInvoiceItemsList() != null) {
 
 			for (InvoiceLine invoiceLine : invoiceLines) {
@@ -91,9 +92,9 @@ public class InvoiceServiceImp implements InvoiceService {
 				invoice.setNetAmount(netamount);
 				invoice.setGrossAmount(grossamount);
 			}
-	
+
 		} else {
-		
+
 		}
 
 		return invoice;
@@ -162,4 +163,74 @@ public class InvoiceServiceImp implements InvoiceService {
 		return invoiceline;
 	}
 
+	@Override
+	public Invoice partyDetails(Invoice invoice, boolean invoiceAddressAsShipping) {
+		Party party = invoice.getParty();
+		Contact contact = null;
+		Address invoiceaddress = null;
+		Address shippingaddress = null;
+		if (party != null) {
+			List<Contact> contactlist = party.getContactList();
+			for (Contact c : contactlist) {
+				if (c.getType().equals("primary")) {
+
+					contact = c;
+				}
+			}
+
+			List<Address> addresslist = party.getAddressList();
+			for (Address a : addresslist) {
+				if (a.getType().equals("invoice")) {
+					invoiceaddress = a;
+				}
+			}
+
+			if (invoiceAddressAsShipping) {
+				invoice.setShippingAddress(shippingaddress);
+
+			} else {
+				List<Address> addresslist1 = party.getAddressList();
+				for (Address a : addresslist1) {
+					if (a.getType().equals("shipping")) {
+						shippingaddress = a;
+
+					}
+				}
+				invoice.setShippingAddress(shippingaddress);
+
+			}
+			invoice.setPartyContact(contact);
+			invoice.setInvoiceAddress(invoiceaddress);
+		} else {
+			invoice.setInvoiceAddress(invoiceaddress);
+			invoice.setShippingAddress(shippingaddress);
+			invoice.setPartyContact(contact);
+
+		}
+		return invoice;
+	}
+
+	@Override
+	public Invoice onclickAddress(Invoice invoice, boolean invoiceaddressAsShip) {
+		Address invoiceaddress = invoice.getInvoiceAddress();
+		Party party = invoice.getParty();
+		Address address = null;
+		if (party != null) {
+			if (invoiceaddressAsShip) {
+				invoice.setShippingAddress(invoiceaddress);
+			} else {
+				List<Address> addresslist = party.getAddressList();
+				for (Address a : addresslist) {
+					if (a.getType().equals("shipping")) {
+						address = a;
+					}
+				}
+				invoice.setShippingAddress(address);
+
+			}
+		} else {
+			invoice.setShippingAddress(address);
+		}
+		return invoice;
+	}
 }
