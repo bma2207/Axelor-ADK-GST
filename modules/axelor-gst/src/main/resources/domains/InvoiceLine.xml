@@ -10,8 +10,8 @@
 		<many-to-one name="invoiceLine" ref="Invoice"/>
 		<string name="HSBN"  />
 		<string name="item" />
-		<integer name="qty" />
-		<decimal name="price" />
+		<integer name="qty" min="0" />
+		<decimal name="price" min="0"/>
 		<decimal name="netAmount"  default="1"/>
 		<decimal name="gstRate"  />
 		<decimal name="IGST"  />

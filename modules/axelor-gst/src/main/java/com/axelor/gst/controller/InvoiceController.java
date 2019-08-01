@@ -17,9 +17,16 @@ public class InvoiceController extends JpaSupport {
 	private InvoiceServiceImp service;
 
 	public void CalculateinvoiceList(ActionRequest request, ActionResponse response) {
+
 		Invoice invoice = request.getContext().asType(Invoice.class);
-		List<InvoiceLine> invoiceList = (List<InvoiceLine>) service.invoiceList(invoice);
-		response.setValues(invoice);
+		Party party = invoice.getParty();
+		if (party != null) {
+			List<InvoiceLine> invoiceList = (List<InvoiceLine>) service.invoiceList(invoice);
+			response.setValues(invoice);
+
+		} else {
+
+		}
 	}
 
 	public void onCalculation(ActionRequest request, ActionResponse response) {
@@ -39,6 +46,8 @@ public class InvoiceController extends JpaSupport {
 		Invoice invoice = request.getContext().getParent().asType(Invoice.class);
 		invoiceline = service.Calculation(invoiceline, invoice);
 		response.setValues(invoiceline);
+		
+		
 	}
 
 	public void setPartyContact(ActionRequest request, ActionResponse response) {
@@ -55,14 +64,4 @@ public class InvoiceController extends JpaSupport {
 		response.setValues(invoice);
 
 	}
-
-	public void checkStatus(ActionRequest request, ActionResponse response) {
-		Invoice invoice = request.getContext().asType(Invoice.class);
-		if (invoice.getStatus() == "draft") {
-			invoice.setStatus("validated");
-			invoice.setStatus("canceled");
-		}
-
-	}
-
 }
