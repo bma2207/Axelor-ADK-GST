@@ -28,15 +28,10 @@ public class SequenceController extends JpaSupport {
 		Party partys = request.getContext().asType(Party.class);
 
 		if (partys.getReference() == null) {
-			Sequence sequence = Beans.get(SequenceRepository.class).all().filter("self.model.name = ?1", "Party")
-					.fetchOne();
-			String reference = sequence.getNextNumber();
-			partys.setReference(reference);
+			Sequence sequence = service.sequenceSet("party");
 			response.setValue("reference", sequence.getNextNumber());
 			sequence = service.sequenceIncrement(sequence);
 			Beans.get(SequenceRepository.class).save(sequence);
-		} else {
-
 		}
 	}
 
@@ -44,16 +39,10 @@ public class SequenceController extends JpaSupport {
 	public void setSequences(ActionRequest request, ActionResponse response) {
 		Invoice invoice = request.getContext().asType(Invoice.class);
 		if (invoice.getReference() == null) {
-
-			Sequence sequence = Beans.get(SequenceRepository.class).all().filter("self.model.name = ?1", "Invoice")
-					.fetchOne();
-			String reference = sequence.getNextNumber();
-			invoice.setReference(reference);
+			Sequence sequence = service.sequenceSet("Invoice");
 			response.setValue("reference", sequence.getNextNumber());
 			sequence = service.sequenceIncrement(sequence);
 			Beans.get(SequenceRepository.class).save(sequence);
-		} else {
-
 		}
 	}
 }

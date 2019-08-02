@@ -1046,6 +1046,7 @@ where invoice.id=?;
     </data-sets>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
+            <property name="footerHeight">2in</property>
             <page-header>
                 <grid id="829">
                     <property name="height">1.1354166666666667in</property>
@@ -1223,10 +1224,225 @@ where invoice.id=?;
                 </grid>
             </page-header>
             <page-footer>
-                <text id="3">
-                    <property name="contentType">html</property>
-                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
-                </text>
+                <grid id="857">
+                    <property name="marginLeft">350pt</property>
+                    <property name="width">2.90625in</property>
+                    <property name="dataSet">Invoice</property>
+                    <list-property name="boundDataColumns">
+                        <structure>
+                            <property name="name">netamount</property>
+                            <text-property name="displayName">netamount</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["netamount"]</expression>
+                            <property name="dataType">decimal</property>
+                        </structure>
+                        <structure>
+                            <property name="name">reference</property>
+                            <text-property name="displayName">reference</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["reference"]</expression>
+                            <property name="dataType">string</property>
+                        </structure>
+                        <structure>
+                            <property name="name">netcgst</property>
+                            <text-property name="displayName">netcgst</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["netcgst"]</expression>
+                            <property name="dataType">decimal</property>
+                        </structure>
+                        <structure>
+                            <property name="name">netigst</property>
+                            <text-property name="displayName">netigst</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["netigst"]</expression>
+                            <property name="dataType">decimal</property>
+                        </structure>
+                        <structure>
+                            <property name="name">netsgst</property>
+                            <text-property name="displayName">netsgst</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["netsgst"]</expression>
+                            <property name="dataType">decimal</property>
+                        </structure>
+                        <structure>
+                            <property name="name">totalgross</property>
+                            <text-property name="displayName">totalgross</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["totalgross"]</expression>
+                            <property name="dataType">decimal</property>
+                        </structure>
+                        <structure>
+                            <property name="name">cgst</property>
+                            <text-property name="displayName">cgst</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["cgst"]</expression>
+                            <property name="dataType">decimal</property>
+                        </structure>
+                        <structure>
+                            <property name="name">sgst</property>
+                            <text-property name="displayName">sgst</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["sgst"]</expression>
+                            <property name="dataType">decimal</property>
+                        </structure>
+                        <structure>
+                            <property name="name">igst</property>
+                            <text-property name="displayName">igst</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["igst"]</expression>
+                            <property name="dataType">decimal</property>
+                        </structure>
+                        <structure>
+                            <property name="name">grossamount</property>
+                            <text-property name="displayName">grossamount</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["grossamount"]</expression>
+                            <property name="dataType">decimal</property>
+                        </structure>
+                        <structure>
+                            <property name="name">qty</property>
+                            <text-property name="displayName">qty</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["qty"]</expression>
+                            <property name="dataType">integer</property>
+                        </structure>
+                        <structure>
+                            <property name="name">price</property>
+                            <text-property name="displayName">price</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["price"]</expression>
+                            <property name="dataType">decimal</property>
+                        </structure>
+                        <structure>
+                            <property name="name">companyname</property>
+                            <text-property name="displayName">companyname</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["companyname"]</expression>
+                            <property name="dataType">string</property>
+                        </structure>
+                        <structure>
+                            <property name="name">line1</property>
+                            <text-property name="displayName">line1</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["line1"]</expression>
+                            <property name="dataType">string</property>
+                        </structure>
+                        <structure>
+                            <property name="name">line2</property>
+                            <text-property name="displayName">line2</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["line2"]</expression>
+                            <property name="dataType">string</property>
+                        </structure>
+                        <structure>
+                            <property name="name">city</property>
+                            <text-property name="displayName">city</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["city"]</expression>
+                            <property name="dataType">decimal</property>
+                        </structure>
+                        <structure>
+                            <property name="name">citys</property>
+                            <text-property name="displayName">citys</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["citys"]</expression>
+                            <property name="dataType">string</property>
+                        </structure>
+                        <structure>
+                            <property name="name">pin_code</property>
+                            <text-property name="displayName">pin_code</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["pin_code"]</expression>
+                            <property name="dataType">string</property>
+                        </structure>
+                        <structure>
+                            <property name="name">state</property>
+                            <text-property name="displayName">state</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["state"]</expression>
+                            <property name="dataType">string</property>
+                        </structure>
+                        <structure>
+                            <property name="name">country</property>
+                            <text-property name="displayName">country</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["country"]</expression>
+                            <property name="dataType">string</property>
+                        </structure>
+                        <structure>
+                            <property name="name">file_name</property>
+                            <text-property name="displayName">file_name</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["file_name"]</expression>
+                            <property name="dataType">string</property>
+                        </structure>
+                        <structure>
+                            <property name="name">file_path</property>
+                            <text-property name="displayName">file_path</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["file_path"]</expression>
+                            <property name="dataType">string</property>
+                        </structure>
+                        <structure>
+                            <property name="name">date_time</property>
+                            <text-property name="displayName">date_time</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["date_time"]</expression>
+                            <property name="dataType">date-time</property>
+                        </structure>
+                        <structure>
+                            <property name="name">partyname</property>
+                            <text-property name="displayName">partyname</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["partyname"]</expression>
+                            <property name="dataType">string</property>
+                        </structure>
+                        <structure>
+                            <property name="name">invlinenetamount</property>
+                            <text-property name="displayName">invlinenetamount</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["invlinenetamount"]</expression>
+                            <property name="dataType">decimal</property>
+                        </structure>
+                        <structure>
+                            <property name="name">item</property>
+                            <text-property name="displayName">item</text-property>
+                            <expression name="expression" type="javascript">dataSetRow["item"]</expression>
+                            <property name="dataType">string</property>
+                        </structure>
+                    </list-property>
+                    <column id="858">
+                        <property name="width">0.9791666666666666in</property>
+                    </column>
+                    <column id="859"/>
+                    <row id="860">
+                        <cell id="861">
+                            <data id="862">
+                                <property name="fontWeight">bold</property>
+                                <property name="resultSetColumn">companyname</property>
+                            </data>
+                        </cell>
+                        <cell id="863"/>
+                    </row>
+                    <row id="864">
+                        <cell id="865">
+                            <property name="colSpan">2</property>
+                            <property name="rowSpan">1</property>
+                            <data id="866">
+                                <property name="resultSetColumn">line1</property>
+                            </data>
+                        </cell>
+                    </row>
+                    <row id="867">
+                        <cell id="868">
+                            <property name="colSpan">2</property>
+                            <property name="rowSpan">1</property>
+                            <data id="869">
+                                <property name="resultSetColumn">line2</property>
+                            </data>
+                        </cell>
+                    </row>
+                    <row id="870">
+                        <cell id="871">
+                            <data id="872">
+                                <property name="marginRight">10pt</property>
+                                <property name="resultSetColumn">citys</property>
+                            </data>
+                        </cell>
+                        <cell id="873">
+                            <data id="874">
+                                <property name="resultSetColumn">pin_code</property>
+                            </data>
+                        </cell>
+                    </row>
+                    <row id="875">
+                        <cell id="876">
+                            <data id="877">
+                                <property name="resultSetColumn">state</property>
+                            </data>
+                        </cell>
+                        <cell id="878">
+                            <data id="879">
+                                <property name="resultSetColumn">country</property>
+                            </data>
+                        </cell>
+                    </row>
+                </grid>
             </page-footer>
         </simple-master-page>
     </page-setup>
@@ -1996,224 +2212,6 @@ where invoice.id=?;
                 <cell id="677">
                     <property name="colSpan">3</property>
                     <property name="rowSpan">1</property>
-                    <grid id="802">
-                        <property name="width">2.90625in</property>
-                        <property name="dataSet">Invoice</property>
-                        <list-property name="boundDataColumns">
-                            <structure>
-                                <property name="name">netamount</property>
-                                <text-property name="displayName">netamount</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["netamount"]</expression>
-                                <property name="dataType">decimal</property>
-                            </structure>
-                            <structure>
-                                <property name="name">reference</property>
-                                <text-property name="displayName">reference</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["reference"]</expression>
-                                <property name="dataType">string</property>
-                            </structure>
-                            <structure>
-                                <property name="name">netcgst</property>
-                                <text-property name="displayName">netcgst</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["netcgst"]</expression>
-                                <property name="dataType">decimal</property>
-                            </structure>
-                            <structure>
-                                <property name="name">netigst</property>
-                                <text-property name="displayName">netigst</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["netigst"]</expression>
-                                <property name="dataType">decimal</property>
-                            </structure>
-                            <structure>
-                                <property name="name">netsgst</property>
-                                <text-property name="displayName">netsgst</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["netsgst"]</expression>
-                                <property name="dataType">decimal</property>
-                            </structure>
-                            <structure>
-                                <property name="name">totalgross</property>
-                                <text-property name="displayName">totalgross</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["totalgross"]</expression>
-                                <property name="dataType">decimal</property>
-                            </structure>
-                            <structure>
-                                <property name="name">cgst</property>
-                                <text-property name="displayName">cgst</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["cgst"]</expression>
-                                <property name="dataType">decimal</property>
-                            </structure>
-                            <structure>
-                                <property name="name">sgst</property>
-                                <text-property name="displayName">sgst</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["sgst"]</expression>
-                                <property name="dataType">decimal</property>
-                            </structure>
-                            <structure>
-                                <property name="name">igst</property>
-                                <text-property name="displayName">igst</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["igst"]</expression>
-                                <property name="dataType">decimal</property>
-                            </structure>
-                            <structure>
-                                <property name="name">grossamount</property>
-                                <text-property name="displayName">grossamount</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["grossamount"]</expression>
-                                <property name="dataType">decimal</property>
-                            </structure>
-                            <structure>
-                                <property name="name">qty</property>
-                                <text-property name="displayName">qty</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["qty"]</expression>
-                                <property name="dataType">integer</property>
-                            </structure>
-                            <structure>
-                                <property name="name">price</property>
-                                <text-property name="displayName">price</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["price"]</expression>
-                                <property name="dataType">decimal</property>
-                            </structure>
-                            <structure>
-                                <property name="name">companyname</property>
-                                <text-property name="displayName">companyname</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["companyname"]</expression>
-                                <property name="dataType">string</property>
-                            </structure>
-                            <structure>
-                                <property name="name">line1</property>
-                                <text-property name="displayName">line1</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["line1"]</expression>
-                                <property name="dataType">string</property>
-                            </structure>
-                            <structure>
-                                <property name="name">line2</property>
-                                <text-property name="displayName">line2</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["line2"]</expression>
-                                <property name="dataType">string</property>
-                            </structure>
-                            <structure>
-                                <property name="name">city</property>
-                                <text-property name="displayName">city</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["city"]</expression>
-                                <property name="dataType">decimal</property>
-                            </structure>
-                            <structure>
-                                <property name="name">citys</property>
-                                <text-property name="displayName">citys</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["citys"]</expression>
-                                <property name="dataType">string</property>
-                            </structure>
-                            <structure>
-                                <property name="name">pin_code</property>
-                                <text-property name="displayName">pin_code</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["pin_code"]</expression>
-                                <property name="dataType">string</property>
-                            </structure>
-                            <structure>
-                                <property name="name">state</property>
-                                <text-property name="displayName">state</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["state"]</expression>
-                                <property name="dataType">string</property>
-                            </structure>
-                            <structure>
-                                <property name="name">country</property>
-                                <text-property name="displayName">country</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["country"]</expression>
-                                <property name="dataType">string</property>
-                            </structure>
-                            <structure>
-                                <property name="name">file_name</property>
-                                <text-property name="displayName">file_name</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["file_name"]</expression>
-                                <property name="dataType">string</property>
-                            </structure>
-                            <structure>
-                                <property name="name">file_path</property>
-                                <text-property name="displayName">file_path</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["file_path"]</expression>
-                                <property name="dataType">string</property>
-                            </structure>
-                            <structure>
-                                <property name="name">date_time</property>
-                                <text-property name="displayName">date_time</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["date_time"]</expression>
-                                <property name="dataType">date-time</property>
-                            </structure>
-                            <structure>
-                                <property name="name">partyname</property>
-                                <text-property name="displayName">partyname</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["partyname"]</expression>
-                                <property name="dataType">string</property>
-                            </structure>
-                            <structure>
-                                <property name="name">invlinenetamount</property>
-                                <text-property name="displayName">invlinenetamount</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["invlinenetamount"]</expression>
-                                <property name="dataType">decimal</property>
-                            </structure>
-                            <structure>
-                                <property name="name">item</property>
-                                <text-property name="displayName">item</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["item"]</expression>
-                                <property name="dataType">string</property>
-                            </structure>
-                        </list-property>
-                        <column id="803">
-                            <property name="width">0.9791666666666666in</property>
-                        </column>
-                        <column id="804"/>
-                        <row id="805">
-                            <cell id="806">
-                                <data id="820">
-                                    <property name="fontWeight">bold</property>
-                                    <property name="resultSetColumn">companyname</property>
-                                </data>
-                            </cell>
-                            <cell id="807"/>
-                        </row>
-                        <row id="808">
-                            <cell id="809">
-                                <property name="colSpan">2</property>
-                                <property name="rowSpan">1</property>
-                                <data id="821">
-                                    <property name="resultSetColumn">line1</property>
-                                </data>
-                            </cell>
-                        </row>
-                        <row id="811">
-                            <cell id="812">
-                                <property name="colSpan">2</property>
-                                <property name="rowSpan">1</property>
-                                <data id="822">
-                                    <property name="resultSetColumn">line2</property>
-                                </data>
-                            </cell>
-                        </row>
-                        <row id="817">
-                            <cell id="818">
-                                <data id="827">
-                                    <property name="marginRight">10pt</property>
-                                    <property name="resultSetColumn">citys</property>
-                                </data>
-                            </cell>
-                            <cell id="819">
-                                <data id="824">
-                                    <property name="resultSetColumn">pin_code</property>
-                                </data>
-                            </cell>
-                        </row>
-                        <row id="814">
-                            <cell id="815">
-                                <data id="825">
-                                    <property name="resultSetColumn">state</property>
-                                </data>
-                            </cell>
-                            <cell id="816">
-                                <data id="826">
-                                    <property name="resultSetColumn">country</property>
-                                </data>
-                            </cell>
-                        </row>
-                    </grid>
                 </cell>
             </row>
         </grid>

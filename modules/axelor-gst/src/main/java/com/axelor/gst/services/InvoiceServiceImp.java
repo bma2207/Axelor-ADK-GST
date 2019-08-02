@@ -32,7 +32,8 @@ public class InvoiceServiceImp implements InvoiceService {
 						netamount = netamount.add(value);
 						invoiceline.setNetAmount(netamount);
 
-						Address companyAddress = invoice.getCompany() != null ? invoice.getCompany().getAddress() : null;
+						Address companyAddress = invoice.getCompany() != null ? invoice.getCompany().getAddress()
+								: null;
 						Address invoiceAddress = invoice.getInvoiceAddress();
 
 						BigDecimal gst = BigDecimal.ZERO;
@@ -127,7 +128,7 @@ public class InvoiceServiceImp implements InvoiceService {
 	public InvoiceLine Calculation(InvoiceLine invoiceline, Invoice invoice) {
 
 		BigDecimal netamount = BigDecimal.ZERO;
-		BigDecimal gross=BigDecimal.ZERO;
+		BigDecimal gross = BigDecimal.ZERO;
 		BigDecimal gst = BigDecimal.ZERO;
 		BigDecimal sgst = BigDecimal.ZERO;
 		BigDecimal cgst = BigDecimal.ZERO;
@@ -173,14 +174,14 @@ public class InvoiceServiceImp implements InvoiceService {
 			invoiceline.setGstRate(gst);
 			invoiceline.setGrossAmount(gross);
 			invoiceline.setItem(null);
-		
+
 		}
 
 		return invoiceline;
 	}
 
 	@Override
-	public Invoice partyDetails(Invoice invoice, boolean invoiceAddressAsShipping) {
+	public Invoice partyDetails(Invoice invoice) {
 		Party party = invoice.getParty();
 		Contact contact = null;
 		Address invoiceaddress = null;
@@ -207,7 +208,7 @@ public class InvoiceServiceImp implements InvoiceService {
 				}
 			}
 
-			if (invoiceAddressAsShipping) {
+			if (invoice.getInUseInvoiceAddressAsShipping()) {
 				invoice.setShippingAddress(shippingaddress);
 
 			} else {

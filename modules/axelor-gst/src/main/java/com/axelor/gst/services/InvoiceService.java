@@ -12,7 +12,7 @@ public interface InvoiceService {
 
 	public InvoiceLine Calculation(InvoiceLine invoiceline, Invoice invoice);
 
-	public Invoice partyDetails(Invoice invoice, boolean invoiceAddressAsShipping);
+	public Invoice partyDetails(Invoice invoice);
 
 	public Invoice onclickAddress(Invoice invoice, boolean invoiceaddressAsShip);
 

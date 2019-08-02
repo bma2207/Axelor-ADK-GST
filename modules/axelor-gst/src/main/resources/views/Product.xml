@@ -9,7 +9,7 @@
 		<toolbar>
 			<button name="invoice" title="Create invoice" onClick="action.product.list" />
 			<button name="btPrint" title="Print" showTitle="false"
-				onClick="action-product-reports-list-On-click" icon="fa-print" />
+				onClick="action-product-reports-list-On-click" icon="fa-print"  />
 		</toolbar>
 
 		<field name="name" />
@@ -110,7 +110,7 @@
 	</action-group>
 
 	<action-method name="action-Path">
-		<call class="com.axelor.gst.controller.ReportImagePath" method="ImagePath" />
+		<call class="com.axelor.gst.controller.ProductController" method="ImagePath" />
 	</action-method>
 
 	<action-view name="action.product.list" title="ProductList"

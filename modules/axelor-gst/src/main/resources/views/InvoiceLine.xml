@@ -63,7 +63,7 @@
 	</action-group>
 
 	<action-method name="action-invoiceLine-calculation">
-		<call class="com.axelor.gst.controller.InvoiceController" method="CalculateNetAmount" />
+		<call class="com.axelor.gst.controller.InvoiceController" method="ComputeNetAmount" />
 	</action-method>
 	
 </object-views>

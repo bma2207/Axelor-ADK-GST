@@ -7,4 +7,6 @@ public interface SequenceService {
 	public Sequence generateSequence(Sequence sequence);
 
 	public Sequence sequenceIncrement(Sequence seqs);
+
+	public Sequence sequenceSet(String domainName);
 }

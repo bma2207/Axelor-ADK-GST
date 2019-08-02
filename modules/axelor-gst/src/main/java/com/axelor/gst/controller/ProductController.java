@@ -1,6 +1,9 @@
 package com.axelor.gst.controller;
 
+import java.io.File;
 import java.util.List;
+
+import com.axelor.app.AppSettings;
 import com.axelor.db.JpaSupport;
 import com.axelor.gst.db.Invoice;
 import com.axelor.gst.db.InvoiceLine;
@@ -21,5 +24,12 @@ public class ProductController extends JpaSupport {
 			List<InvoiceLine> invoiceLines = service.productList(invoice, productids);
 			response.setValue("invoiceItemsList", invoiceLines);
 		}
+	}
+	public void ImagePath(ActionRequest request, ActionResponse response) {
+		String attachmentPath = AppSettings.get().getPath("file.upload.dir", "");
+
+		attachmentPath = attachmentPath.endsWith(File.separator) ? attachmentPath : attachmentPath + File.separator;
+
+		request.getContext().put("AttachmentPath", attachmentPath);
 	}
 }

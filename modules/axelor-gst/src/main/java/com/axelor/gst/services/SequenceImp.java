@@ -1,6 +1,8 @@
 package com.axelor.gst.services;
 
 import com.axelor.gst.db.Sequence;
+import com.axelor.gst.db.repo.SequenceRepository;
+import com.axelor.inject.Beans;
 
 public class SequenceImp implements SequenceService {
 
@@ -36,6 +38,7 @@ public class SequenceImp implements SequenceService {
 
 	@Override
 	public Sequence generateSequence(Sequence sequence) {
+
 		String prefix = sequence.getPrefix();
 		String suffix = sequence.getSuffix();
 		int number = sequence.getPadding();
@@ -51,5 +54,13 @@ public class SequenceImp implements SequenceService {
 
 		return sequence;
 	}
-	
+
+	@Override
+	public Sequence sequenceSet(String domainName) {
+		Sequence sequence = Beans.get(SequenceRepository.class).all().filter("self.model.name = ?1", domainName)
+				.fetchOne();
+
+		return sequence;
+	}
+
 }
