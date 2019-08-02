@@ -7,17 +7,19 @@
 
 	<grid name="state-grid" model="com.axelor.gst.db.State" title="state-grid">
 		<field name="name" title="State" />
-		<field name="country" title="Country"/>
+		<field name="country" title="Country" />
 	</grid>
 
-	<form name="state-form" model="com.axelor.gst.db.State" title="state-form" width="large" css="panel-pink">
-		<panel title="State" colSpan="12" >
-			<field name="name" required="true" title="State"/>
-			<field name="country" required="true" title="Country"/>
+	<form name="state-form" model="com.axelor.gst.db.State" title="state-form"
+		width="large" css="panel-pink">
+		<panel title="State" colSpan="12">
+			<field name="name" required="true" />
+			<field name="country" required="true" />
 		</panel>
 		<panel sidebar="true">
 			<field name="createdOn" />
 			<field name="updatedOn" />
 		</panel>
 	</form>
+
 </object-views>

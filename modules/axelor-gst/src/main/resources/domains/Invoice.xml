@@ -7,20 +7,20 @@
 	<module package="com.axelor.gst.db" name="gst" />
 	<entity name="Invoice">
 		<string name="status" selection="invoiceStatus" default="draft" />
-		<many-to-one name="company" ref="Company" />
-		<string name="reference" />
-		<datetime name="dateTime" />
-		<integer name="priority" />
-		<many-to-one name="party" ref="Party" />
-		<many-to-one name="partyContact" ref="Contact" />
-		<many-to-one name="invoiceAddress" ref="Address" />
-		<many-to-one name="shippingAddress" ref="Address" />
-		<boolean name="inUseInvoiceAddressAsShipping" />
-		<decimal name="netAmount" />
-		<decimal name="netIGST" />
-		<decimal name="netSGST" />
-		<decimal name="netCGST" />
-		<decimal name="grossAmount" />
+		<many-to-one name="company" ref="Company" title="Company" />
+		<string name="reference" title="Reference" />
+		<datetime name="dateTime" title="Date Of Invoice" />
+		<integer name="priority" title="Priority" />
+		<many-to-one name="party" ref="Party" title="Party Name" />
+		<many-to-one name="partyContact" ref="Contact" title="Party Contact" />
+		<many-to-one name="invoiceAddress" ref="Address" title="Invoice Address" />
+		<many-to-one name="shippingAddress" ref="Address" title="Shipping Address" />
+		<boolean name="inUseInvoiceAddressAsShipping" title="Use Invoice Address As Shipping" />
+		<decimal name="netAmount" title="Net Amount" />
+		<decimal name="netIGST" title="Net IGST" />
+		<decimal name="netSGST" title="Net SGST" />
+		<decimal name="netCGST" title="Net CGST" />
+		<decimal name="grossAmount" title="Gross Amount" />
 		<one-to-many name="invoiceItemsList" ref="InvoiceLine"
 			mappedBy="invoiceLine" />
 	</entity>

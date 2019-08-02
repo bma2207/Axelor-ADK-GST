@@ -32,7 +32,7 @@ public class InvoiceServiceImp implements InvoiceService {
 						netamount = netamount.add(value);
 						invoiceline.setNetAmount(netamount);
 
-						Address companyAddress = invoice.getCompany().getAddress();
+						Address companyAddress = invoice.getCompany() != null ? invoice.getCompany().getAddress() : null;
 						Address invoiceAddress = invoice.getInvoiceAddress();
 
 						BigDecimal gst = BigDecimal.ZERO;
@@ -41,7 +41,7 @@ public class InvoiceServiceImp implements InvoiceService {
 						BigDecimal cgst = BigDecimal.ZERO;
 						BigDecimal igst = BigDecimal.ZERO;
 						BigDecimal valueigst = invoiceline.getNetAmount();
-						if (companyAddress.getState().equals(invoiceAddress.getState())) {
+						if (companyAddress != null && companyAddress.getState().equals(invoiceAddress.getState())) {
 							gst = gst.add(invoiceline.getGstRate().multiply(netamount)).divide(new BigDecimal(100));
 							BigDecimal dividevalue = gst.divide(new BigDecimal(2));
 							sgst = sgst.add(dividevalue);

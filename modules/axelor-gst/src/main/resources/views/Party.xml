@@ -8,6 +8,7 @@
 		<option value="Individual">Individual</option>
 		<option value="company">Company</option>
 	</selection>
+	
 	<grid name="party-grid" model="com.axelor.gst.db.Party" title="Party-grid">
 		<field name="reference" />
 		<field name="name" />
@@ -20,22 +21,22 @@
 	</grid>
 
 	<form name="party-form" model="com.axelor.gst.db.Party" title="Party-form"
-		width="large" css="panel-pink" onSave="action-references_no" >
-		
-		
-			<panel title="Party Details" colSpan="12">
-				<field name="reference" title="Reference NO" />
-				<field name="name" required="true"  title="Party Name"/>
-				<field name="type" selection="gst-party-type-select" required="true" title="Type Of Party"/>
-				<field name="GSTIN" min="15" max="15" title="GSTIN" />
-				<field name="customer" colSpan="6" title="Customer"/>
-				<field name="supplier" colSpan="6" title="Supplier"/>
-				
-			</panel>
-			
-			<panel title="Party Contact Details" colSpan="12">
-				<field name="contactList" colSpan="12" >
-					<viewer><![CDATA[
+		width="large" css="panel-pink" onSave="action-references_no">
+
+
+		<panel title="Party Details" colSpan="12">
+			<field name="reference" />
+			<field name="name" required="true" />
+			<field name="type" selection="gst-party-type-select" required="true" />
+			<field name="GSTIN" min="15" max="15" />
+			<field name="customer" colSpan="6" />
+			<field name="supplier" colSpan="6" />
+
+		</panel>
+
+		<panel title="Party Contact Details" colSpan="12">
+			<field name="contactList" colSpan="12">
+				<viewer><![CDATA[
         <address>
         {{record.name}} {{record.type}}<br>
         {{record.primaryEmail}}, {{record.secondaryEmail}}<br>
@@ -43,23 +44,23 @@
         </address>
         ]]>
         </viewer>
-					<editor x-show-titles="false">
+				<editor x-show-titles="false">
 
-						<field name="name" required="true" />
-						<field name="type" selection="gst-contact-type-select"
-							required="true" />
-						<field name="primaryEmail" />
-						<field name="secondaryEmail" />
-						<field name="primaryPhone" />
-						<field name="secondaryPhone" />
+					<field name="name" required="true" />
+					<field name="type" selection="gst-contact-type-select"
+						required="true" />
+					<field name="primaryEmail" />
+					<field name="secondaryEmail" />
+					<field name="primaryPhone" />
+					<field name="secondaryPhone" />
 
-					</editor>
-				</field>
-			</panel>
+				</editor>
+			</field>
+		</panel>
 
-			<panel title="Party Address Details" colSpan="12">
-				<field name="addressList" colSpan="12">
-					<viewer><![CDATA[
+		<panel title="Party Address Details" colSpan="12">
+			<field name="addressList" colSpan="12">
+				<viewer><![CDATA[
          <address>
         {{record.type}} {{record.line1}}<br>
         {{record.line2}}, {{record.city.name}}<br>
@@ -68,24 +69,24 @@
         </address>
         ]]>
         </viewer>
-					<editor x-show-titles="false">
+				<editor x-show-titles="false">
+					<field name="type" selection="gst-address-type-select"
+						required="true" />
+					<field name="line1" required="true" />
+					<field name="line2" />
+					<field name="country" required="true" />
+					<field name="state" domain="self.country = :country" />
+					<field name="city" domain="self.state = :state" required="true" />
+					<field name="pinCode" />
+				</editor>
+			</field>
+		</panel>
 
-						<field name="type" selection="gst-address-type-select"
-							required="true" />
-						<field name="line1" required="true" />
-						<field name="line2" />
-						<field name="country" required="true" />
-						<field name="state" domain="self.country = :country" />
-						<field name="city" domain="self.state = :state" required="true" />
-						<field name="pinCode" />
-					</editor>
-				</field>
-			</panel>
-
-		
-		
 	</form>
-<action-method name="action-references_no">
-<call class="com.axelor.gst.controller.SequenceController" method="setSequence"/>
-</action-method>
+
+	<action-method name="action-references_no">
+		<call class="com.axelor.gst.controller.SequenceController"
+			method="setSequence" />
+	</action-method>
+
 </object-views>

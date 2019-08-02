@@ -9,20 +9,20 @@
 		<option value="saving">Saving</option>
 	</selection>
 	<grid name="bank-grid" model="com.axelor.gst.db.Bank"  title="bank-grid">
-		<field name="bank" title="Bank Name" />
-		<field name="accountNo" title="Account No"/>
-		<field name="IFSC" title="IFSC Code"/>
-		<field name="type" title="Account Type"/>
-		<field name="address" title="Branch" />
+		<field name="bank"  />
+		<field name="accountNo" />
+		<field name="IFSC" />
+		<field name="type" />
+		<field name="address"  />
 	</grid>
 
 	<form name="bank-form" model="com.axelor.gst.db.Bank" title="address-form" width="large" css="panel-pink">
 		<panel title="Bank Details" colSpan="12">
-		<field name="bank" required="true" title="Bank Name" />
-		<field name="accountNo" required="true" title="Account No" />
-		<field name="IFSC" required="true" title="IFSC Code" />
-		<field name="type" selection="gst-account-type-select" required="true" title="Account Type" />
-		<field name="address" title="Branch"  />
+		<field name="bank" required="true"  />
+		<field name="accountNo" required="true"  />
+		<field name="IFSC" required="true" />
+		<field name="type" selection="gst-account-type-select" required="true"  />
+		<field name="address"  />
 		</panel>
 		<panel sidebar="true">
 			<field name="createdOn" />

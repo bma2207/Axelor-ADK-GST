@@ -6,11 +6,11 @@
 
 	<module package="com.axelor.gst.db" name="gst" />
 	<entity name="Bank">
-		<string name="bank"/>
-		<string name="accountNo"/>
-		<string name="IFSC"/>
-		<string name="type" selection="gst-account-type-select"/>
-		<string name="address" large="true"/>
+		<string name="bank" title="Bank Name"/>
+		<string name="accountNo" title="Account No"/>
+		<string name="IFSC" title="IFSC Code"/>
+		<string name="type" selection="gst-account-type-select" title="Account Type"/>
+		<string name="address" large="true" title="Branch"/>
 		
 	</entity>
 </domain-models>

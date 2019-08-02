@@ -7,17 +7,17 @@
 	<module package="com.axelor.gst.db" name="gst" />
 	<entity name="InvoiceLine">
 		<many-to-one name="product" ref="Product" title="Product" />
-		<many-to-one name="invoiceLine" ref="Invoice"/>
-		<string name="HSBN"  />
-		<string name="item" />
-		<integer name="qty" min="0" />
-		<decimal name="price" min="0"/>
-		<decimal name="netAmount"  default="1"/>
-		<decimal name="gstRate"  />
-		<decimal name="IGST"  />
-		<decimal name="SGST" />
-		<decimal name="CGST"  />
-		<decimal name="grossAmount" />
-		
+		<many-to-one name="invoiceLine" ref="Invoice" />
+		<string name="HSBN" title="HSBN" />
+		<string name="item" title="Item" />
+		<integer name="qty" min="0" title="Quantity" />
+		<decimal name="price" min="0" title="Price" />
+		<decimal name="netAmount" default="1" title="Net amount" />
+		<decimal name="gstRate" title="GST Rate" />
+		<decimal name="IGST" title="IGST" />
+		<decimal name="SGST" title="SGST" />
+		<decimal name="CGST" title="CGST" />
+		<decimal name="grossAmount" title="Gross Amount" />
+
 	</entity>
 </domain-models>

@@ -6,10 +6,11 @@
 
 	<module package="com.axelor.gst.db" name="gst" />
 	<entity name="Sequence">
-		<string name="prefix" required="true" title="Prefix"/>
-		<string name="suffix" title="Suffix"/>
-		<integer name="padding" title="Padding"/>
-		<string name="nextNumber" title="Next Number" default="00"/>
-		<many-to-one name="model" ref="com.axelor.meta.db.MetaModel" title="Model"/>
+		<string name="prefix" required="true" title="Prefix" />
+		<string name="suffix" title="Suffix" />
+		<integer name="padding" title="Padding" />
+		<string name="nextNumber" title="Next Number" default="00" />
+		<many-to-one name="model" ref="com.axelor.meta.db.MetaModel"
+			title="Model" />
 	</entity>
 </domain-models>

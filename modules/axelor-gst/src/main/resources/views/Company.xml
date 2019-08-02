@@ -9,12 +9,12 @@
 		<option value="shipping">Shipping</option>
 	</selection>
 	<grid name="company-grid" model="com.axelor.gst.db.Company" title="company-grid">
-		<field name="name" title="Company Name" />
-		<field name="image" title="Image" />
-		<field name="contactList" title="Contact Details" />
-		<field name="GSTIN" title="GSTIN" />
-		<field name="bankList" title="Bank Details" />
-		<field name="address" title="Address" />
+		<field name="name"  />
+		<field name="image"/>
+		<field name="contactList"  />
+		<field name="GSTIN"  />
+		<field name="bankList" />
+		<field name="address"  />
 
 	</grid>
 
@@ -22,15 +22,15 @@
 		width="large" css="panel-pink">
 		<panel title="Company Details" colSpan="12">
 			<panel colSpan="4">
-				<field name="image" widget="image" title="Image" />
+				<field name="image" widget="image" />
 			</panel>
 			<panel colSpan="8">
-				<field name="name" title="Company Name" colSpan="8" />
+				<field name="name"  colSpan="8" />
 				<field name="GSTIN" colSpan="8" />
 			</panel>
 		</panel>
 		<panel colSpan="12" title="Company Contact Details">
-			<field name="contactList" colSpan="12" title="Contact Details">
+			<field name="contactList" colSpan="12" >
 				<viewer><![CDATA[
         <address>
         {{record.name}} {{record.type}}<br>
@@ -54,14 +54,14 @@
 		</panel>
 
 		<panel colSpan="12" title="Company Bank Details">
-			<field name="bankList" colSpan="12" title="Bank Details" />
+			<field name="bankList" colSpan="12"  />
 		</panel>
 		<panel sidebar="true">
 			<field name="createdOn" />
 			<field name="updatedOn" />
 		</panel>
 		<panel sidebar="true">
-			<field name="address" title="Address" />
+			<field name="address" />
 		</panel>
 
 

@@ -5,9 +5,9 @@
   http://axelor.com/xml/ns/domain-models/domain-models_5.0.xsd">
 
 	<module package="com.axelor.gst.db" name="gst" />
-	<entity name="Country">
+	<entity name="Country" >
 	<one-to-many name="countryList" ref="State" mappedBy="country"/>
 	<one-to-many name="countrysList" ref="City" mappedBy="country"/>
-		<string name="name" namecolumn="true" />
+		<string name="name" namecolumn="true" title="Country"/>
 	</entity>
 </domain-models>

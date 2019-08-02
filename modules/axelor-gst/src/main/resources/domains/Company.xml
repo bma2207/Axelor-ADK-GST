@@ -6,11 +6,11 @@
 
 	<module package="com.axelor.gst.db" name="gst" />
 	<entity name="Company">
-		<string name="name" required="true" title="Name"/>
+		<string name="name" required="true" title="Company Name"/>
 		<many-to-one name="image"  title="Image" ref="com.axelor.meta.db.MetaFile" />
-		<one-to-many name="contactList" ref="Contact" />
-		<string name="GSTIN"/>
-		<one-to-many name="bankList" ref="Bank" />
-		<many-to-one name="address" ref="Address"/>
+		<one-to-many name="contactList" ref="Contact" title="Contact Details"/>
+		<string name="GSTIN" title="GSTIN"/>
+		<one-to-many name="bankList" ref="Bank"  title="Bank Details"/>
+		<many-to-one name="address" ref="Address" title="Address"/>
 	</entity>
 </domain-models>

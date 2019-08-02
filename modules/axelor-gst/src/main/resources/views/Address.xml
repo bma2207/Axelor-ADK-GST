@@ -9,24 +9,24 @@
 		<option value="shipping">Shipping</option>
 	</selection>
 	<grid name="address-grid" model="com.axelor.gst.db.Address"  title="address-grid">
-		<field name="type" title="Address Type" />
-		<field name="line1" title="Area"/>
-		<field name="line2" title="Street"/>
-		<field name="country" title="Country"/>
-		<field name="state" title="State"/>
-		<field name="city" title="City"/>
-		<field name="pinCode" title="Pin Code"/> 
+		<field name="type"  />
+		<field name="line1" />
+		<field name="line2" />
+		<field name="country" />
+		<field name="state" />
+		<field name="city" />
+		<field name="pinCode" /> 
 	</grid>
 
 	<form name="address-form" model="com.axelor.gst.db.Address" title="address-form" css="panel-pink" width="large">
 		<panel  title="Address"  colSpan="12">
-		<field name="type" selection="gst-address-type-select"  required="true" title="Address Type"/>
-		<field name="line1" required="true" title="Area"/>
-		<field name="line2" title="Street"/>
-		<field name="country"  required="true" title="Country"/>
-		<field name="state" domain="self.country = :country" title="State" />
-		<field name="city" domain="self.state = :state" required="true" title="City"/>
-		<field name="pinCode" title="Pin Code"/>
+		<field name="type" selection="gst-address-type-select"  required="true"/>
+		<field name="line1" required="true" />
+		<field name="line2" />
+		<field name="country"  required="true" />
+		<field name="state" domain="self.country = :country"  />
+		<field name="city" domain="self.state = :state" required="true" />
+		<field name="pinCode"/>
 		</panel>
 		<panel sidebar="true">
 			<field name="createdOn" />

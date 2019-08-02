@@ -6,14 +6,14 @@
 
 	<module package="com.axelor.gst.db" name="gst" />
 	<entity name="Address">
-		<string name="type" selection="gst-address-type-select" required="true"/>
-		<string name="line1" required="true" namecolumn="true"/>
-		<string name="line2"/>
-		<many-to-one ref="Country" name="country"/>
-		<many-to-one ref="State" name="state" />
-		<many-to-one ref="City" name="city" />
-		<many-to-one name="partyAddress" ref="Party"/>
-		<string name="pinCode"/>
+		<string name="type" selection="gst-address-type-select" required="true" title="Address Type" />
+		<string name="line1" required="true" namecolumn="true" title="Area"/>
+		<string name="line2" title="Street"/>
+		<many-to-one ref="Country" name="country" title="Country"/>
+		<many-to-one ref="State" name="state" title="State"/>
+		<many-to-one ref="City" name="city" title="City" />
+		<many-to-one name="partyAddress" ref="Party"  title="PartyAddress"/>
+		<string name="pinCode" title="Pin Code"/>
 		
 		
 	</entity>

@@ -6,9 +6,9 @@
 
 	<module package="com.axelor.gst.db" name="gst" />
 	<entity name="City">
-		<string name="name" namecolumn="true" />
-		<many-to-one ref="State" name="state"/>
-		<many-to-one ref="Country" name="country"/>
-		<one-to-many name="cityList" ref="Address" mappedBy="city"/>
+		<string name="name" namecolumn="true" title="City"/>
+		<many-to-one ref="State" name="state" title="State"/>
+		<many-to-one ref="Country" name="country" title="Country"/>
+		<one-to-many name="cityList" ref="Address" mappedBy="city" />
 	</entity>
 </domain-models>

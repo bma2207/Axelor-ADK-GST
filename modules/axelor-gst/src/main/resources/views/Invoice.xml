@@ -70,42 +70,41 @@
 		</toolbar>
 
 		<panel title="Create Invoice" colSpan="12">
-			<field name="reference" title="Reference" colSpan="4" readonly="true" />
+			<field name="reference" colSpan="4" readonly="true" />
 			<field name="status" widget="nav-select" readonly="true"
 				colSpan="8" />
 		</panel>
 
 		<panel title="Party Details" colSpan="12">
-			<field name="party" title="Party Name"
-				onChange="action-group-of-set-check-party-address" required="true" />
-			<field name="partyContact" title="Party Contact" domain="self.party =:party" />
+			<field name="party" onChange="action-group-of-set-check-party-address"
+				required="true" />
+			<field name="partyContact" domain="self.party =:party" />
 		</panel>
 
 		<panel title="Address Details" colSpan="12">
-			<field name="invoiceAddress" title="Invoice Address" domain="self.partyAddress =:party"
+			<field name="invoiceAddress" domain="self.partyAddress =:party"
 				onChange="action-group-invoiceLitCalculation" required="true" />
-			<field name="shippingAddress" title="Shipping Address" domain="self.partyAddress =:party" />
-			<field name="inUseInvoiceAddressAsShipping" title="Use Invoice Address As Shipping"
+			<field name="shippingAddress" domain="self.partyAddress =:party" />
+			<field name="inUseInvoiceAddressAsShipping"
 				onChange="com.axelor.gst.controller.InvoiceController:setShippingAddress" />
 		</panel>
 
 		<panel title="Invoice Calculation" colSpan="12">
-			<field name="netAmount" title="Net Amount" readonly="true" />
-			<field name="netIGST" title="Net IGST" readonly="true" />
-			<field name="netSGST" title="Net SGST" readonly="true" />
-			<field name="netCGST" title="Net CGST" readonly="true" />
-			<field name="grossAmount" title="Gross Amount" readonly="true" />
+			<field name="netAmount" readonly="true" />
+			<field name="netIGST" readonly="true" />
+			<field name="netSGST" readonly="true" />
+			<field name="netCGST" readonly="true" />
+			<field name="grossAmount" readonly="true" />
 		</panel>
 
 		<panel title="Invoice Items List" colSpan="12" name="invoiceList"
-			readonlyIf="(invoiceAddress == null &amp;&amp; company !=null) || status == 'validated' || status == 'paid' || status == 'canceled'">
+			readonlyIf="(invoiceAddress == null &amp;&amp; company ==null) || status == 'validated' || status == 'paid' || status == 'canceled'">
 			<field name="invoiceItemsList" colSpan="12" onChange="action-calculation" />
 		</panel>
 
 		<panel sidebar="true" hideIf="$readonly()">
 			<button name="Validated" title="Validated"
-				onClick="action-invoicelist.validated,save,action-references"
-				hidden="true" showIf="status == 'draft'" />
+				onClick="action-group-invoice-validation" hidden="true" showIf="status == 'draft'" />
 			<button name="Canceled" title="Canceled" onClick="action-Canceled,save"
 				hidden="true" hideIf="status == 'paid' || status =='canceled' " />
 			<button name="paid" title="Paid" onClick="action-paid,save"
@@ -120,9 +119,9 @@
 		</panel>
 
 		<panel sidebar="true">
-			<field name="company" title="Company" required="true" />
-			<field name="dateTime" title="Date Of Invoice" expr="eval:  __datetime__" />
-			<field name="priority" title="Priority" />
+			<field name="company" required="true" onChange="action.company.invoice" />
+			<field name="dateTime" expr="eval:  __datetime__" />
+			<field name="priority" />
 		</panel>
 	</form>
 
@@ -131,11 +130,13 @@
 		<field name="dateTime" expr="eval: __datetime__" />
 		<field name="company" expr="eval: __repo__(Company).all().fetchOne() " />
 	</action-record>
+	
 	<action-attrs name="action-invoicelist.validated">
 		<attribute
 			if="invoiceItemsList !=null &amp;&amp; !invoiceItemsList.isEmpty()"
 			name="value" expr="validated" for="status" />
 	</action-attrs>
+
 	<action-attrs name="action-draft">
 		<attribute name="value" for="status" expr="draft" />
 	</action-attrs>
@@ -158,11 +159,11 @@
 		<param name="AttachmentPath" expr="eval:AttachmentPath" />
 	</action-report>
 
-
 	<action-group name="action-invoice-report-On-click">
 		<action name="action-AttechMentPath" />
 		<action name="print.WithImage" />
 	</action-group>
+	
 	<action-method name="action-AttechMentPath">
 		<call class="com.axelor.gst.controller.ReportImagePath" method="ImagePath" />
 	</action-method>
@@ -181,13 +182,16 @@
 		<call class="com.axelor.gst.controller.SequenceController"
 			method="setSequences" />
 	</action-method>
+	
 	<action-method name="action-invoiceListCalculation">
 		<call class="com.axelor.gst.controller.InvoiceController" method="CalculateinvoiceList" />
 	</action-method>
+	
 	<action-method name="action-calculation-price">
 		<call class="com.axelor.gst.controller.Invoicelinecontroller"
 			method="CalculateNetAmount" />
 	</action-method>
+	
 	<action-record name="action.set.defualt.invoiceAddress"
 		model="com.axelor.gst.db.Invoice">
 
@@ -202,28 +206,41 @@
 	<action-method name="action-prty-address-set">
 		<call class="com.axelor.gst.controller.InvoiceController" method="setPartyContact" />
 	</action-method>
+	
 	<action-method name="action-prty-address-check">
 		<call class="com.axelor.gst.controller.InvoiceController" method="CalculateinvoiceList" />
 	</action-method>
+	
 	<action-method name="action-party-invoice-calculaion">
 		<call class="com.axelor.gst.controller.InvoiceController" method="onCalculation" />
 	</action-method>
+	
 	<action-attrs name="action.set.values.as.party">
 		<attribute name="value" for="party" expr="" />
 	</action-attrs>
+	
 	<action-group name="action-group-of-set-check-party-address">
 		<action name="action-prty-address-set" />
 		<action name="action-prty-address-check" />
 		<action name="action-party-invoice-calculaion" />
-		<!-- <action name="action.set.values.as.party"/> -->
 	</action-group>
+	
 	<action-method name="action.checkStatus">
 		<call class="com.axelor.gst.controller.InvoiceController" method="checkStatus" />
 	</action-method>
-	<action-validate name="action.kanban.condintion">
-		<error message="Wrong" if="__self__.status == 'validated'" />
-		<error message="Wrong" if="__self__.status != 'draft' " />
-	</action-validate>
+
+	<action-group name="action.company.invoice">
+		<action name="action-prty-address-check" />
+		<action name="action-party-invoice-calculaion" />
+	</action-group>
+
+	<action-group name="action-group-invoice-validation">
+		<action name="save" />
+		<action name="action-invoicelist.validated"
+			if="invoiceItemsList !=null &amp;&amp; !invoiceItemsList.isEmpty()" />
+		<action name="action-references" if="status == 'validated'" />
+		<action name="save" />
+	</action-group>
 
 
 </object-views>

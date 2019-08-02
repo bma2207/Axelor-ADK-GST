@@ -4,12 +4,14 @@
 	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
   http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
 
-
 	<grid name="product-grid" model="com.axelor.gst.db.Product" title="product-grid">
+
 		<toolbar>
 			<button name="invoice" title="Create invoice" onClick="action.product.list" />
-				<button name="btPrint" title="Print" showTitle="false"  onClick="action-product-reports-list-On-click" icon="fa-print" />
+			<button name="btPrint" title="Print" showTitle="false"
+				onClick="action-product-reports-list-On-click" icon="fa-print" />
 		</toolbar>
+
 		<field name="name" />
 		<field name="code" />
 		<field name="HSBN" />
@@ -19,6 +21,7 @@
 		<field name="image" widget="image" />
 		<field name="gstRate" />
 	</grid>
+
 	<cards name="product-card" title="product-card" model="com.axelor.gst.db.Product">
 		<field name="name" />
 		<field name="product" />
@@ -64,7 +67,7 @@
 		</panel>
 
 		<panel colSpan="12" title="Product Information">
-			<field name="product" title="Category" onChange="gst-product-category" />
+			<field name="product" onChange="gst-product-category" />
 			<field name="salePrice" />
 			<field name="costPrice" />
 			<field name="gstRate" />
@@ -75,20 +78,21 @@
 			<field name="updatedOn" />
 		</panel>
 	</form>
+
 	<action-record name="gst-product-category" model="com.axelor.gst.db.Product">
 		<field name="gstRate" expr="eval:product.gstRate" />
 	</action-record>
+
 	<action-method name="action-product-gst">
-		<call class="com.axelor.gst.controller.ProductController"
-			method="openPrintWizard" />
+		<call class="com.axelor.gst.controller.ProductController" method="openPrintWizard" />
 	</action-method>
 
-	
 	<action-report name="print.Image" design="product_report.rptdesign"
 		output="so-${date}${time}" format="pdf">
 		<param name="param" expr="eval:id" />
 		<param name="AttachmentPath" expr="eval:AttachmentPath" />
 	</action-report>
+
 	<action-report name="print.list.of.products" design="Products_grid_report.rptdesign"
 		output="so-${date}${time}" format="pdf">
 		<param name="param" expr="eval:_ids.toString()" />
@@ -99,16 +103,20 @@
 		<action name="action-Path" />
 		<action name="print.Image" />
 	</action-group>
+
 	<action-group name="action-product-reports-list-On-click">
 		<action name="action-Path" />
 		<action name="print.list.of.products" />
 	</action-group>
+
 	<action-method name="action-Path">
 		<call class="com.axelor.gst.controller.ReportImagePath" method="ImagePath" />
 	</action-method>
-	
-	<action-view name="action.product.list" title="ProductList" model="com.axelor.gst.db.Invoice">
-	<view type="form" name="invoice-form"/>
-	<context name="productIds" expr="eval:_ids"/>
+
+	<action-view name="action.product.list" title="ProductList"
+		model="com.axelor.gst.db.Invoice">
+		<view type="form" name="invoice-form" />
+		<context name="productIds" expr="eval:_ids" />
 	</action-view>
+
 </object-views>

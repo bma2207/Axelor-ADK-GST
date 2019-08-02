@@ -8,36 +8,40 @@
 		<option value="invoice">Invoice</option>
 		<option value="shipping">Shipping</option>
 	</selection>
-	<grid name="sequence-grid" model="com.axelor.gst.db.Sequence" title="sequence-grid">
-		<field name="prefix" title="Prifix" />
-		<field name="suffix" title="Suffix" />
-		<field name="padding" title="Padding"/>
-		<field name="nextNumber" title="Next Number"/>
-		<field name="model" title="Model"/>
+	<grid name="sequence-grid" model="com.axelor.gst.db.Sequence"
+		title="sequence-grid">
+		<field name="prefix" />
+		<field name="suffix" />
+		<field name="padding" />
+		<field name="nextNumber" />
+		<field name="model" />
 
 	</grid>
 
-	<form name="sequence-form" model="com.axelor.gst.db.Sequence" title="sequence-form" width="large" css="panel-pink" onSave="action-sequence">
+	<form name="sequence-form" model="com.axelor.gst.db.Sequence"
+		title="sequence-form" width="large" css="panel-pink" onSave="action-sequence">
 		<panel title="Create Sequence" colSpan="12">
-			<field name="prefix" required="true" title="Prifix"/>
-			<field name="suffix" title="Suffix"/>
-			<field name="padding" title="Padding"/>
-			<field name="nextNumber" title="Next Number" readonly="true"/>
-			<field name="model" required="true" title="Model"/>
-			
+			<field name="prefix" required="true" />
+			<field name="suffix" />
+			<field name="padding" />
+			<field name="nextNumber" readonly="true" />
+			<field name="model" required="true" />
+
 		</panel>
 		<panel sidebar="true">
 			<field name="createdOn" />
 			<field name="updatedOn" />
 		</panel>
+
 	</form>
+
 	<action-method name="action-generateSequence">
-	<call class="com.axelor.gst.controller.SequenceController" method="generateSequence"/>
-	
+		<call class="com.axelor.gst.controller.SequenceController"
+			method="generateSequence" />
 	</action-method>
 
 	<action-group name="action-sequence">
-	<action name="action-generateSequence"/>
+		<action name="action-generateSequence" />
 	</action-group>
 
 </object-views>

@@ -6,9 +6,10 @@
 
 	<module package="com.axelor.gst.db" name="gst" />
 	<entity name="ProductCategory">
-		<string name="name" title="Name"/>
-		<string name="code" title="Code"/>
-		<decimal name="gstRate" title="GST rate"/>
-		<one-to-many name="productCategory" ref="Product"/>
+		<string name="name" title="Name" />
+		<string name="code" title="Code" />
+		<decimal name="gstRate" title="GST rate" />
+		<one-to-many name="productCategory" ref="Product" />
 	</entity>
+	
 </domain-models>

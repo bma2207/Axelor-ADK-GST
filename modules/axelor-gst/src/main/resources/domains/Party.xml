@@ -6,13 +6,15 @@
 
 	<module package="com.axelor.gst.db" name="gst" />
 	<entity name="Party">
-		<string name="reference"/>
-		<string name="name"/>
-		<string name="type" selection="gst-party-type-select"/>
-	    <boolean name="customer"/>
-		<boolean name="supplier"/>
-		<string name="GSTIN"/>
-		<one-to-many name="contactList" ref="Contact" mappedBy="party"/>
-		<one-to-many name="addressList" ref="Address"  mappedBy="partyAddress"/>
+		<string name="reference" title="Reference NO" />
+		<string name="name" title="Party Name" />
+		<string name="type" selection="gst-party-type-select" title="Type Of Party" />
+		<boolean name="customer" />
+		<boolean name="supplier" />
+		<string name="GSTIN" title="GSTIN" />
+		<one-to-many name="contactList" ref="Contact" mappedBy="party"
+			title="Customer" />
+		<one-to-many name="addressList" ref="Address" mappedBy="partyAddress"
+			title="Supplier" />
 	</entity>
 </domain-models>

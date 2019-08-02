@@ -6,12 +6,12 @@
 
 
 	<grid name="country-grid" model="com.axelor.gst.db.Country"  title="country-grid">
-		<field name="name" title="Country" />
+		<field name="name"  />
 	</grid>
 
 	<form name="country-form" model="com.axelor.gst.db.Country" title="country-form" width="large" css="panel-pink">
 		<panel title="Country" colSpan="12">
-			<field name="name" required="true" title="Country"/>
+			<field name="name" required="true" />
 		</panel>
 		<panel sidebar="true">
 			<field name="createdOn" />

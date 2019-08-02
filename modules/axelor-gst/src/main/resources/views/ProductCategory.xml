@@ -15,13 +15,16 @@
 	<form name="productCategory-form" model="com.axelor.gst.db.ProductCategory"
 		title="productCategory-form" width="large" css="panel-pink">
 		<panel title="Product Category" colSpan="12">
-			<field name="code" required="true"/>
+			<field name="code" required="true" />
 			<field name="name" required="true" />
 			<field name="gstRate" />
 		</panel>
+
 		<panel sidebar="true">
 			<field name="createdOn" />
 			<field name="updatedOn" />
 		</panel>
+		
 	</form>
+	
 </object-views>

@@ -6,17 +6,17 @@
 
 
 	<grid name="city-grid" model="com.axelor.gst.db.City"  title="city-grid">
-		<field name="name" title="City"/>
-	    <field name="country" title="Country"/>
-		<field name="state" title="State" />
+		<field name="name" />
+	    <field name="country" />
+		<field name="state"  />
 	</grid>
 
 	<form name="city-form" model="com.axelor.gst.db.City" title="city-form" width="large" css="panel-pink">
 		<panel title="City Add" colSpan="12">
 		
-		<field name="country" required="true" title="Country" />
-		<field name="state" domain="self.country = :country" title="State"/>
-		<field name="name" required="true" title="City" />
+		<field name="country" required="true" />
+		<field name="state" domain="self.country = :country" />
+		<field name="name" required="true"  />
 		
 		</panel>
 		<panel sidebar="true">
