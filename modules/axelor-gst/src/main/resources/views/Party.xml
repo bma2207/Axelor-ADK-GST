@@ -35,7 +35,7 @@
 		</panel>
 
 		<panel title="Party Contact Details" colSpan="12">
-			<field name="contactList" colSpan="12">
+			<field name="contactList" colSpan="12" >
 				<viewer><![CDATA[
         <address>
         {{record.name}} {{record.type}}<br>

@@ -28,7 +28,7 @@ public class SequenceController extends JpaSupport {
 		Party partys = request.getContext().asType(Party.class);
 
 		if (partys.getReference() == null) {
-			Sequence sequence = service.sequenceSet("party");
+			Sequence sequence = service.sequenceSet("Party");
 			response.setValue("reference", sequence.getNextNumber());
 			sequence = service.sequenceIncrement(sequence);
 			Beans.get(SequenceRepository.class).save(sequence);
