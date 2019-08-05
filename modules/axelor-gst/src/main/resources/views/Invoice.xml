@@ -63,7 +63,7 @@
 	</kanban>
 
 	<form name="invoice-form" model="com.axelor.gst.db.Invoice" title="invoice-form"
-		width="large" css="panel-pink" onNew="action-gst-product-ids">
+		width="large" css="panel-pink" onNew="action-invoice-productids">
 		<toolbar>
 			<button name="btnPrint" title="Print" showTitle="false"
 				showIf="id" onClick="action-invoice-report-On-click" icon="fa-print" />
@@ -111,7 +111,7 @@
 			<button name="paid" title="Paid" onClick="action-invoice-paid,save"
 				hidden="true" showIf="status == 'validated' " />
 			<button name="draft" title="Draft" onClick="action-invoice-draft,save"
-				hidden="true" showIf="status == 'validated' " />
+				hidden="true" />
 		</panel>
 
 		<panel sidebar="true">
@@ -127,7 +127,7 @@
 		</panel>
 	</form>
 
-	<action-record name="action-gst-invoice-record-default-dt"
+	<action-record name="action-invoice-record-default-dt"
 		model="com.axelor.gst.db.Invoice">
 		<field name="dateTime" expr="eval: __datetime__" />
 		<field name="company" expr="eval: __repo__(Company).all().fetchOne() " />
@@ -170,17 +170,17 @@
 		<call class="com.axelor.gst.controller.ProductController" method="ImagePath" />
 	</action-method>
 
-	<action-method name="action-gst-product">
+	<action-method name="action-invoice-productlist">
 		<call class="com.axelor.gst.controller.ProductController" method="productIdsList" />
 	</action-method>
 
-	<action-group name="action-gst-product-ids">
-		<action name="action-gst-product" />
+	<action-group name="action-invoice-productids">
+		<action name="action-invoice-productlist" />
 		<action name="action-gst-invoice-record-default-dt" />
 
 	</action-group>
 
-	<action-method name="action-references">
+	<action-method name="action-invoice-references">
 		<call class="com.axelor.gst.controller.SequenceController"
 			method="setSequences" />
 	</action-method>
@@ -232,7 +232,7 @@
 		<action name="save" />
 		<action name="action-invoicelist.validated"
 			if="invoiceItemsList !=null &amp;&amp; !invoiceItemsList.isEmpty()" />
-		<action name="action-references" if="status == 'validated'" />
+		<action name="action-invoice-references" if="status == 'validated'" />
 		<action name="save" />
 	</action-group>
 

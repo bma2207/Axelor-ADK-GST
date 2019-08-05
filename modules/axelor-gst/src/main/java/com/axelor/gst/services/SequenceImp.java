@@ -11,7 +11,7 @@ public class SequenceImp implements SequenceService {
 		String prefix = seqs.getPrefix();
 		String ssuffix = seqs.getSuffix();
 		String nextNo = seqs.getNextNumber();
-		String num = "00";
+		//String num = "00";
 		int number = seqs.getPadding();
 		int nextNolen = nextNo.length();
 		int prefixlen = prefix.length();
@@ -29,7 +29,7 @@ public class SequenceImp implements SequenceService {
 		for (int i = 0; i < len; i++) {
 			temp = "0" + temp;
 		}
-		int tm = temp.length();
+		//int tm = temp.length();
 		String newVersion = prefix + temp;
 		int val = (Integer.parseInt(result) + 1);
 		seqs.setNextNumber(newVersion + "" + val + "" + ssuffix);
@@ -38,7 +38,6 @@ public class SequenceImp implements SequenceService {
 
 	@Override
 	public Sequence generateSequence(Sequence sequence) {
-
 		String prefix = sequence.getPrefix();
 		String suffix = sequence.getSuffix();
 		int number = sequence.getPadding();

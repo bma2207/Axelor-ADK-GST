@@ -18,6 +18,6 @@
 		<decimal name="SGST" title="SGST" />
 		<decimal name="CGST" title="CGST" />
 		<decimal name="grossAmount" title="Gross Amount" />
-
+	
 	</entity>
 </domain-models>
